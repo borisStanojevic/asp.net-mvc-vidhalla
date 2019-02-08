@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidhalla", "Vidhalla\Vidhalla.csproj", "{36D65FDD-56F6-40DE-B29C-C5BE385C5793}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidhalla.Tests", "Vidhalla.Tests\Vidhalla.Tests.csproj", "{CBE30CD9-B925-4838-B336-C66229F64AD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36D65FDD-56F6-40DE-B29C-C5BE385C5793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D65FDD-56F6-40DE-B29C-C5BE385C5793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D65FDD-56F6-40DE-B29C-C5BE385C5793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D65FDD-56F6-40DE-B29C-C5BE385C5793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBE30CD9-B925-4838-B336-C66229F64AD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBE30CD9-B925-4838-B336-C66229F64AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBE30CD9-B925-4838-B336-C66229F64AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBE30CD9-B925-4838-B336-C66229F64AD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A93F3A9D-62FA-4E35-A976-8C1C273D8862}
+	EndGlobalSection
+EndGlobal

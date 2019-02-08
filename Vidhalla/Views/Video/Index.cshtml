@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<header class="jumbotron">
+    <p>
+        <button class="btn btn-primary btn-lg ghostBtn">Start watching !</button>
+    </p>
+</header>
+
+<div style="margin-top: 5em;">
+    <button id="showSearchBtn" type="button" class="btn btn-default btn-lg">
+        <span class="glyphicon glyphicon-search"></span>
+    </button>
+</div>
+
+<br>
+
+<section id="videosSearchSection">
+    <div class="well" style="width: 20%">
+        <form style="width: 100%">
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Video Name" name="videoNameInput">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="User" name="videoOwnerInput">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="minViewsInput" min="0" placeholder="Views Min">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="maxViewsInput" placeholder="Views Max">
+            </div>
+            <div class="form-group">
+                <div class="input-group date" id="minDateTimeInput">
+                    <input type="text" class="form-control" placeholder="From" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group date" id="maxDateTimeInput">
+                    <input type="text" class="form-control" placeholder="Up Until" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <a href="#" id="advancedSearchBtn" type="button" class="btn btn-default btn-md">Search</a>
+            </div>
+
+        </form>
+    </div>
+</section>
+<aside>
+    <label>Sort by</label>
+    <select id="sortSelect" class="form-control" title="Sort by">
+        <option value="viewsDesc">Views, DESC</option>
+        <option value="viewsAsc">Views, ASC</option>
+        <option value="videoNameAsc">Name, A-Z</option>
+        <option value="videoNameDesc">Name, Z-A</option>
+        <option value="videoOwnerAsc">User, A-Z</option>
+        <option value="videoOwnerDesc">User, Z-A</option>
+        <option value="dateTimeAsc">Upload Date, ASC</option>
+        <option value="dateTimeDesc">Upload Date, DESC</option>
+    </select>
+</aside>
+
+
+<!-- Sekcija glavnog sadrzaja u kojoj ce biti combo box za sortiranje, side search bar, lista videa i paginacija -->
+<main id="main" class="container">
+
+    <h1>Most popular</h1>
+
+    <section id="top5VideosSection">
+        <div class="row">
+
+        </div>
+    </section>
+
+    <!-- Linija koja razdvaja most popular videos od ostalih -->
+    <hr>
+
+    <h1>Videos</h1>
+
+    <section id="videosSection">
+        <div class="row">
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4"></iframe>
+                </div>
+                <h4><a href="#">Autor</a></h4>
+                <span><img src="images/" class="smallThumbnail"><a href="#"></a></span>
+                <br>
+                <span>Pregledi</span>
+                <span>&nbsp; 21/06/2018</span>
+            </div>
+
+        </div>
+    </section>
+
+</main>
