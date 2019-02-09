@@ -12,6 +12,7 @@ namespace Vidhalla.EntitiesConfiguration
         public VideoConfiguration()
         {
             Property(v => v.Url).IsRequired();
+            Property(v => v.Title).IsRequired().HasMaxLength(127);
             Property(v => v.Description).HasMaxLength(1023);
             Property(v => v.DatePosted).HasColumnType("DATETIME2");
 

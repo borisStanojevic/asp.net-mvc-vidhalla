@@ -14,8 +14,11 @@ namespace Vidhalla.EntitiesConfiguration
         public AccountConfiguration()
         {
             Property(a => a.Username).HasMaxLength(31).IsRequired()
+                .HasMaxLength(31)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName,
                                      new IndexAnnotation(new IndexAttribute() {IsUnique = true}));
+            Property(a => a.Password).IsRequired().HasMaxLength(127);
+            Property(a => a.ProfilePicture).IsRequired();
             Property(a => a.FirstName).HasMaxLength(31);
             Property(a => a.LastName).HasMaxLength(63);
             Property(a => a.ChannelDescription).HasMaxLength(255);

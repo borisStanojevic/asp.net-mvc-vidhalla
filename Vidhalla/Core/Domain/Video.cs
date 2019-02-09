@@ -16,6 +16,8 @@ namespace Vidhalla.Core.Domain
             get => _url;
             set => _url = URL_BASE + value;
         }
+
+        public string Title { get; set; }
         public string Description { get; set; } = "";
         public Visibility Visibility { get; set; } = Visibility.PUBLIC;
         public bool IsBlocked { get; set; }
@@ -33,10 +35,9 @@ namespace Vidhalla.Core.Domain
         {
         }
 
-        public Video(int id, string description, Visibility visibility, bool isCommentingAllowed, bool isRatingVisible, int viewsCount, Account uploader)
+        public Video(string title, string description, Visibility visibility, bool isCommentingAllowed, bool isRatingVisible, int viewsCount, Account uploader)
         {
-            Id = id;
-
+            Title = title;
             Description = description;
             Visibility = visibility;
             IsCommentingAllowed = isCommentingAllowed;

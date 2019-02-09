@@ -13,7 +13,7 @@ namespace Vidhalla.EntitiesConfiguration
         {
             Property(cv => cv.Comment_Id).HasColumnOrder(1);
             Property(cv => cv.Owner_Id).HasColumnOrder(2);
-            HasKey(cv => new { cv.Comment_Id, cv.Owner_Id });
+            HasKey(cv => new { cv.Comment_Id, cv.Owner_Id});
 
             Property(cv => cv.Type).HasColumnType("TINYINT");
             Property(cv => cv.DateCreated).HasColumnType("DATETIME2");

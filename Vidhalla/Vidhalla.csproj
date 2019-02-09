@@ -180,6 +180,35 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902091535557_InitialModel.cs" />
+    <Compile Include="Migrations\201902091535557_InitialModel.Designer.cs">
+      <DependentUpon>201902091535557_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091554508_PopulateAccounts.cs" />
+    <Compile Include="Migrations\201902091554508_PopulateAccounts.Designer.cs">
+      <DependentUpon>201902091554508_PopulateAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091556552_PopulateVideos.cs" />
+    <Compile Include="Migrations\201902091556552_PopulateVideos.Designer.cs">
+      <DependentUpon>201902091556552_PopulateVideos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091617115_PopulateComments.cs" />
+    <Compile Include="Migrations\201902091617115_PopulateComments.Designer.cs">
+      <DependentUpon>201902091617115_PopulateComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091628507_PopulateVideoVotes.cs" />
+    <Compile Include="Migrations\201902091628507_PopulateVideoVotes.Designer.cs">
+      <DependentUpon>201902091628507_PopulateVideoVotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091632463_PopulateCommentVotes.cs" />
+    <Compile Include="Migrations\201902091632463_PopulateCommentVotes.Designer.cs">
+      <DependentUpon>201902091632463_PopulateCommentVotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091634017_PopulateSubscriptions.cs" />
+    <Compile Include="Migrations\201902091634017_PopulateSubscriptions.Designer.cs">
+      <DependentUpon>201902091634017_PopulateSubscriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\AccountRepository.cs" />
     <Compile Include="Persistence\CommentRepository.cs" />
     <Compile Include="Persistence\CommentVoteRepository.cs" />
@@ -190,8 +219,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -240,13 +267,32 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201902091535557_InitialModel.resx">
+      <DependentUpon>201902091535557_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091554508_PopulateAccounts.resx">
+      <DependentUpon>201902091554508_PopulateAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091556552_PopulateVideos.resx">
+      <DependentUpon>201902091556552_PopulateVideos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091617115_PopulateComments.resx">
+      <DependentUpon>201902091617115_PopulateComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091628507_PopulateVideoVotes.resx">
+      <DependentUpon>201902091628507_PopulateVideoVotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091632463_PopulateCommentVotes.resx">
+      <DependentUpon>201902091632463_PopulateCommentVotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091634017_PopulateSubscriptions.resx">
+      <DependentUpon>201902091634017_PopulateSubscriptions.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
