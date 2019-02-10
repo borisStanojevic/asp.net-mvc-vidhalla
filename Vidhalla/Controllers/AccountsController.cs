@@ -6,10 +6,16 @@ using System.Web.Mvc;
 
 namespace Vidhalla.Controllers
 {
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
-        // GET: Account
+        // GET: Accounts
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: Details/{id}
+        public ActionResult Details(int? id, string username)
         {
             return View();
         }

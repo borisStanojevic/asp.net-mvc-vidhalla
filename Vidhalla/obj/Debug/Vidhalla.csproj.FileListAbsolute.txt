@@ -92,7 +92,6 @@ C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.CoreCompil
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.CopyComplete
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.pdb
-C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csprojAssemblyReference.cache
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.InitialModel.resources
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.GenerateResource.cache
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.PopulateAccounts.resources

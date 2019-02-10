@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Vidhalla.Controllers
 {
-    public class CommentVoteController : Controller
+    public class CommentVotesController : Controller
     {
-        // GET: CommentVote
+        // GET: CommentVotes
         public ActionResult Index()
         {
             return View();

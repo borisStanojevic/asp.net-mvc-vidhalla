@@ -153,11 +153,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CommentController.cs" />
-    <Compile Include="Controllers\CommentVoteController.cs" />
-    <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="Controllers\VideoVoteController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\CommentVotesController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
+    <Compile Include="Controllers\VideoVotesController.cs" />
     <Compile Include="Core\Domain\Account.cs" />
     <Compile Include="Core\Domain\Comment.cs" />
     <Compile Include="Core\Domain\CommentVote.cs" />
@@ -221,6 +221,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\cover.png" />
+    <Content Include="Content\Images\default.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -252,15 +254,16 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Videos\Index.cshtml" />
+    <Content Include="Views\Videos\Details.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\CommentVote\" />
-    <Folder Include="Views\Comment\" />
-    <Folder Include="Views\VideoVote\" />
+    <Folder Include="Views\Comments\" />
+    <Folder Include="Views\CommentVotes\" />
+    <Folder Include="Views\VideoVotes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
