@@ -77,7 +77,7 @@
     <section id="commentsSection">
         <div class="form-group">
             <br>
-            <textarea id="myCommentInput" class="form-control" rows="5"></textarea>
+            <textarea id="myCommentInput" class="form-control" rows="5" style="width: 65%;"></textarea>
             <button id="commentBtn" type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-comment"></span> Comment
             </button>
@@ -148,20 +148,131 @@
             </div>
         </div>
 
-        <ul id="commentsList">
+        <ul id="commentsList" style="width: 65%;">
             <!-- Dalje dinamicki generisem komentare koji se ticu ovog videa -->
             <!-- Komentari ce biti oblika
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img id="commentatorThumbnail" class="img-circle" src="Defaultni thumbnail">  koja ce biti 35px * 35px
+                    <a href="user.html?usernameKorisnika">Ime Korisnika</a>
+                </div>
+                <div class="panel-body">
+                    <button id="likeCommentBtn" type="button" class="btn btn-default btn-sm" value="like">
+                        <span class="glyphicon glyphicon-thumbs-up">Like</span>
+                    </button>
+                </div>
+            </div>
+            -->
+            
+            <li>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                         <img id="commentatorThumbnail" class="img-circle" src="Defaultni thumbnail">  koja ce biti 35px * 35px
-                        <a href="user.html?usernameKorisnika">Ime Korisnika</a>
+                        <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                        @Html.ActionLink("USERNAME", "Details", "Accounts", new { username = "mitar123" }, null);
+                        <span> posted on 01/01/2019 </span>
+                        <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-trash"></span></button>
                     </div>
+
                     <div class="panel-body">
-                        <button id="likeCommentBtn" type="button" class="btn btn-default btn-sm" value="like">
-                            <span class="glyphicon glyphicon-thumbs-up">Like</span>
+                        Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise. My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in. Roof hope shy tore leaf joy paid boy. Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has. 
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-default btn-sm likeCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA">
                         </button>
+                        <span> LAJKOVI DISLAJKVI</span>
                     </div>
+
                 </div>
-            -->
+            </li>
+            
+            <li>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                        @Html.ActionLink("USERNAME", "Details", "Accounts", new { username = "mitar123" }, null);
+                        <span> posted on 01/01/2019 </span>
+                        <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+
+                    <div class="panel-body">
+                        Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise. My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in. Roof hope shy tore leaf joy paid boy. Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has. 
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-default btn-sm likeCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA">
+                        </button>
+                        <span> LAJKOVI DISLAJKVI</span>
+                    </div>
+
+                </div>
+            </li>
+            
+            <li>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                        @Html.ActionLink("USERNAME", "Details", "Accounts", new { username = "mitar123" }, null);
+                        <span> posted on 01/01/2019 </span>
+                        <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+
+                    <div class="panel-body">
+                        Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise. My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in. Roof hope shy tore leaf joy paid boy. Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has. 
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-default btn-sm likeCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA">
+                        </button>
+                        <span> LAJKOVI DISLAJKVI</span>
+                    </div>
+
+                </div>
+            </li>
+            
+            <li>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                        @Html.ActionLink("USERNAME", "Details", "Accounts", new { username = "mitar123" }, null);
+                        <span> posted on 01/01/2019 </span>
+                        <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+
+                    <div class="panel-body">
+                        Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise. My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in. Roof hope shy tore leaf joy paid boy. Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has. 
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-default btn-sm likeCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA">
+                        </button>
+                        <span> LAJKOVI DISLAJKVI</span>
+                    </div>
+
+                </div>
+            </li>
+            
+            <li>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                        @Html.ActionLink("USERNAME", "Details", "Accounts", new { username = "mitar123" }, null)
+                        <span> posted on 01/01/2019 </span>
+                        <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+
+                    <div class="panel-body">
+                        Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise. My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in. Roof hope shy tore leaf joy paid boy. Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has. 
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-default btn-sm likeCommentBtn" data-index="INDEX" data-commentid="ID KOMENTARA">
+                        </button>
+                        <span> LAJKOVI DISLAJKVI</span>
+                    </div>
+
+                </div>
+            </li>
+
         </ul>
     </section>

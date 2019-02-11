@@ -147,7 +147,8 @@
 
     <main>
         <img alt="Profile picture" src=@Url.Content("~/Content/Images/default.png") class="bigThumbnail">
-        <h1 id="username"></h1>
+        <h1 id="username"> USERNAME </h1>
+
         <form id="uploadImageForm" action="UploadImageServlet" method="POST" enctype="multipart/form-data" role="form">
             <input type="hidden" name="username"> Upload Thumbnail :
             <input type="file" multiple accept="image/*" name="thumbnail">
@@ -156,28 +157,32 @@
             </div>
             <label class="errorMsgLabel"></label>
         </form>
+
         <span style="display:block;content:'';clear:both">
-            <span id="subscribersSpan" style='float: left'></span>
+            <span id="subscribersSpan" style='float: left'>BROJ SUBSCRIBERA</span>
             <button style="float: right" id="subscribeBtn" type="button" class="btn btn-primary btn-lg"></button>
         </span>
         <p id="channelInfo">
+            Ovdje stoji opis kanala i tako dalje i tako dalje i tako dalje i tako blize i tako blize i tako blize
         </p>
+
         <button id="showEditUserBtn" type="button" class="btn btn-info">Edit</button>
         <button id="deleteUserBtn" type="button" class="btn btn-danger" value="block">Delete</button>
-        <section style="display: none;" id='editChannelSection'>
+
+        <section style="display: none;" id="editChannelSection">
             <form id="editUserForm" style="width: 30%">
                 <br>
                 <div class="form-group">
-                    <input name='firstName' type="text" class="form-control" placeholder="First Name">
+                    <input name="firstName" type="text" class="form-control" placeholder="First Name">
                 </div>
                 <div class="form-group">
-                    <input name='lastName' type="text" class="form-control" placeholder="Last Name">
+                    <input name="lastName" type="text" class="form-control" placeholder="Last Name">
                 </div>
                 <div class="form-group">
-                    <input name='password' type="text" class="form-control" placeholder="Password">
+                    <input name="password" type="text" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <input name='channelDescription' type="text" class="form-control" placeholder="Channel Description">
+                    <input name="channelDescription" type="text" class="form-control" placeholder="Channel Description">
                 </div>
                 <div class="form-group">
                     <select class="form-control" id="roleSelect">
@@ -186,25 +191,26 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <input name='email' type="text" class="form-control" placeholder="Email">
+                    <input name="email" type="text" class="form-control" placeholder="Email">
                 </div>
                 <label class="errorMsgLabel"></label>
                 <span>
-                    <button id='editUserBtn' type='button' class='btn btn-warning'>
-                        <span class='glyphicon glyphicon-edit'></span> Edit
+                    <button id="editUserBtn" type="button" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
                     </button>
                     <!-- Block dugme treba samo admin da vidi -->
                     <button id="blockUserBtn" type="button" class="btn btn-danger" value="block">Block</button>
                 </span>
             </form>
         </section>
+
     </main>
 
     <hr>
 
 </div>
 
-<div class="container" style="display:block;content:'';clear:both">
+<span class="container" style="display:block;content:'';clear:both">
     <section style="width : 40%;float: left">
         <button id="showUploadVideoBtn" type="button" class="btn btn-success btn-md">
             <span class="glyphicon glyphicon-upload"></span> Upload
@@ -221,6 +227,44 @@
         <br>
         <ul id="uploadedVideosList">
             <!--Ovdje kacim dinamicki kreirane <li> videa koje je korisnik cija se stranica posmatra, uploadovao  -->
+
+            <li>
+                <div>
+                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <span> PREGLEDA </span>
+                    <span style="display:block"> 01/01/2019 </span>
+                </div>
+            </li>
+            
+            <li>
+                <div>
+                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <span> PREGLEDA </span>
+                    <span style="display:block"> 01/01/2019 </span>
+                </div>
+            </li>
+            
+            <li>
+                <div>
+                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <span> PREGLEDA </span>
+                    <span style="display:block"> 01/01/2019 </span>
+                </div>
+
+            </li>
+            
         </ul>
     </section>
     <aside style="margin-top: 2.4em;width : 20%;float: right">
@@ -229,6 +273,37 @@
         <ul id="subscribedsList">
 
             <!-- Ovdje kacim dinamicki kreirane <li> korisnika koje korisnik cija se stranica posmatra, prati -->
+            
+            <li>
+                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
+            </li>
+
+            <hr>
+            
+            <li>
+                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
+            </li>
+
+            <hr>
+            
+            <li>
+                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
+            </li>
+
+            <hr>
+            
+            <li>
+                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
+            </li>
+
+            <hr>
+            
+            <li>
+                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
+            </li>
+
+            <hr>
+                
         </ul>
     </aside>
 </div>
