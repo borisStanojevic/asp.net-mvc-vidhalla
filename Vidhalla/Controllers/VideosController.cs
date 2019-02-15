@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidhalla.Core.Domain;
 using Vidhalla.Persistence;
+using Vidhalla.ViewModels.Videos;
 
 namespace Vidhalla.Controllers
 {
@@ -28,13 +30,22 @@ namespace Vidhalla.Controllers
         // GET: Videos
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Video> videos = _unitOfWork.Videos.GetAll();
+            ICollection<IndexViewModel> viewModel = new List<IndexViewModel>();
+            foreach (Video video in videos)
+            {
+                viewModel.Add(new IndexViewModel(video));         
+            }
+
+            return View(viewModel);
         }
 
         // GET: Videos/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Video video = _unitOfWork.Videos.Get(id);
+
+            return View(video);
         }
 
         // GET: Videos/Create

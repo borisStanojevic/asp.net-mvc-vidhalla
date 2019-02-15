@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Vidhalla.ViewModels.Videos.IndexViewModel>
+
+@{
     ViewBag.Title = "Home";
 }
 
@@ -77,91 +79,110 @@
 
     <section id="top5VideosSection">
         <div class="row">
-            
+        @foreach (var video in Model)
+        {
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src=@video.Url></iframe>
+                </div>
+                <h4>
+                    @Html.ActionLink(video.Title, "Details", "Videos", new { id = video.Id }, null)
+                </h4>
+                <span>
+                    <img src=@Url.Content($"~/Content/Images/{video.UploaderProfilePicture}") class="smallThumbnail">
+                    @Html.ActionLink(video.UploaderUsername, "Details", "Accounts", new { username = video.UploaderUsername }, null)
+                </span>
+                <br>
+                <span>@video.ViewsCount views</span>
+                <span> &nbsp; @video.DateUploaded</span>
+                <div class="ratingDiv">@video.LikesCount @video.DislikesCount</div>
+            </div>
+        }
+
+            @*<div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+                </div>
+                <h4>
+                    @Html.ActionLink("NASLOV", "Details", "Videos", new {id = 1}, null);
+                </h4>
+                <span>
+                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new {username = "mitar123"}, null);
+                </span>
+                <br>
+                <span>100 PREGLEDA</span>
+                <span> "&nbsp;" 01/01/2019 </span>
+                <div class="ratingDiv">50 LAJKOVA 1 DISLAJKOVA</div>
+            </div>
+
             <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
                 <div class="embed-responsive embed-responsive-4by3">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                 </div>
                 <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+                    @Html.ActionLink("NASLOV", "Details", "Videos", new {id = 1}, null);
                 </h4>
                 <span>
                     <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new {username = "mitar123"}, null);
                 </span>
                 <br>
                 <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+                <span> "&nbsp;" 01/01/2019 </span>
+                <div class="ratingDiv">50 LAJKOVA 1 DISLAJKOVA</div>
             </div>
-            
+
             <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
                 <div class="embed-responsive embed-responsive-4by3">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                 </div>
                 <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+                    @Html.ActionLink("NASLOV", "Details", "Videos", new {id = 1}, null);
                 </h4>
                 <span>
                     <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new {username = "mitar123"}, null);
                 </span>
                 <br>
                 <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+                <span> "&nbsp;" 01/01/2019 </span>
+                <div class="ratingDiv">50 LAJKOVA 1 DISLAJKOVA</div>
             </div>
-            
+
             <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
                 <div class="embed-responsive embed-responsive-4by3">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                 </div>
                 <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+                    @Html.ActionLink("NASLOV", "Details", "Videos", new {id = 1}, null);
                 </h4>
                 <span>
                     <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new {username = "mitar123"}, null);
                 </span>
                 <br>
                 <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+                <span> "&nbsp;" 01/01/2019 </span>
+                <div class="ratingDiv">50 LAJKOVA 1 DISLAJKOVA</div>
             </div>
-            
+
             <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
                 <div class="embed-responsive embed-responsive-4by3">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                 </div>
                 <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+                    @Html.ActionLink("NASLOV", "Details", "Videos", new {id = 1}, null);
                 </h4>
                 <span>
                     <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new {username = "mitar123"}, null);
                 </span>
                 <br>
                 <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
+                <span> "&nbsp;" 01/01/2019 </span>
+                <div class="ratingDiv">50 LAJKOVA 1 DISLAJKOVA</div>
+            </div>*@
 
         </div>
     </section>

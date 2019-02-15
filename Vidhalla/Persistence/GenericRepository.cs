@@ -19,12 +19,12 @@ namespace Vidhalla.Persistence
 
         //====================================================================//
 
-        public T Get(int id)
+        public virtual T Get(int id)
         {
             return GenericContext.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return GenericContext.Set<T>().ToList();
         }

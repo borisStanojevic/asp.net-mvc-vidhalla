@@ -15,6 +15,15 @@ namespace Vidhalla.Core.Domain
         public virtual Video Video { get; set; }
         public ICollection<CommentVote> Votes { get; set; }
 
+        public int GetLikesCount()
+        {
+            return Votes.Where(cv => cv.Type == Vote.LIKE).ToList().Count();
+        }
+
+        public int GetDislikesCount()
+        {
+            return Votes.Where(cv => cv.Type == Vote.DISLIKE).ToList().Count();
+        }
 
         public override bool Equals(object obj)
         {

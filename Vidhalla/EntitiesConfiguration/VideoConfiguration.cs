@@ -14,7 +14,7 @@ namespace Vidhalla.EntitiesConfiguration
             Property(v => v.Url).IsRequired();
             Property(v => v.Title).IsRequired().HasMaxLength(127);
             Property(v => v.Description).HasMaxLength(1023);
-            Property(v => v.DatePosted).HasColumnType("DATETIME2");
+            Property(v => v.DateUploaded).HasColumnType("DATETIME2");
 
             HasRequired(v => v.Uploader).WithMany(a => a.UploadedVideos);
             HasMany(v => v.Comments).WithRequired(c => c.Video);

@@ -19,5 +19,22 @@ namespace Vidhalla.Persistence
             get { return GenericContext as VidhallaDbContext; }
         }
 
+
+        public override IEnumerable<Video> GetAll()
+        {
+            return DbContext.Set<Video>().Include(v => v.Uploader)
+                                         .Include(v => v.Votes)
+                                         .ToList();
+        }
+
+        public override Video Get(int id)
+        {
+            return DbContext.Set<Video>().Where(v => v.Id == id)
+                .Include(v => v.Uploader)
+                .Include(v => v.Votes)
+                .Include(v => v.Comments.Select(c => c.Commenter))
+                .Include(v => v.Comments.Select(c => c.Votes))
+                .Single();
+        }
     }
 }

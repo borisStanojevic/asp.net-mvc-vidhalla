@@ -7,16 +7,9 @@ namespace Vidhalla.Core.Domain
 {
     public class Video
     {
-        private const string URL_BASE = "https://www.youtube.com/embed/";
 
         public int Id { get; set; }
-        private string _url;
-        public string Url
-        {
-            get => _url;
-            set => _url = URL_BASE + value;
-        }
-
+        public string Url { get; set; }
         public string Title { get; set; }
         public string Description { get; set; } = "";
         public Visibility Visibility { get; set; } = Visibility.PUBLIC;
@@ -25,14 +18,15 @@ namespace Vidhalla.Core.Domain
         public bool IsCommentingAllowed { get; set; } = true;
         public bool IsRatingVisible { get; set; } = true;
         public int ViewsCount { get; set; }
-        public DateTime DatePosted { get; set; }
+        public DateTime DateUploaded { get; set; }
         public Account Uploader { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<VideoVote> Votes { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<VideoVote> Votes { get; set; }
 
 
-        public Video()
+        protected Video()
         {
+            
         }
 
         public Video(string title, string description, Visibility visibility, bool isCommentingAllowed, bool isRatingVisible, int viewsCount, Account uploader)
@@ -43,9 +37,10 @@ namespace Vidhalla.Core.Domain
             IsCommentingAllowed = isCommentingAllowed;
             IsRatingVisible = isRatingVisible;
             ViewsCount = viewsCount;
-            DatePosted = new DateTime();
+            DateUploaded = new DateTime();
             Uploader = uploader;
         }
+
 
         public override bool Equals(object obj)
         {

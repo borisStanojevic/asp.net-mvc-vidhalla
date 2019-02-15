@@ -49,6 +49,7 @@ C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\roslyn\vbc.rsp
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\roslyn\VBCSCompiler.exe
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\Antlr3.Runtime.dll
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\AutoMapper.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\EntityFramework.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\EntityFramework.SqlServer.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\Microsoft.AI.Agent.Intercept.dll
@@ -63,6 +64,7 @@ C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\Microsoft.CodeDom.Providers.DotN
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\Newtonsoft.Json.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.ValueTuple.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Helpers.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Mvc.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Optimization.dll
@@ -71,8 +73,11 @@ C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.WebPages.Deployment.d
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.WebPages.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.WebPages.Razor.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\WebGrease.dll
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\AutoMapper.pdb
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\AutoMapper.xml
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\EntityFramework.xml
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\EntityFramework.SqlServer.xml
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.ValueTuple.xml
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Helpers.xml
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Mvc.xml
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\bin\System.Web.Optimization.xml
@@ -95,8 +100,12 @@ C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.Popula
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.PopulateVideoVotes.resources
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.PopulateCommentVotes.resources
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.PopulateSubscriptions.resources
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.AddIdToVoteClasses.resources
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.RemoveIdFromVoteClasses.resources
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.Migrations.RenameDatePostedToDateUploaded.resources
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.GenerateResource.cache
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.CoreCompileInputs.cache
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csproj.CopyComplete
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.dll
 C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.pdb
+C:\Users\Boris\Desktop\C#\Vidhalla\Vidhalla\obj\Debug\Vidhalla.csprojAssemblyReference.cache

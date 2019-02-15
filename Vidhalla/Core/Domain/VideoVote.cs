@@ -8,7 +8,6 @@ namespace Vidhalla.Core.Domain
 {
     public class VideoVote
     {
-
         public Vote Type { get; set; }
         public DateTime DateCreated { get; set; }
 

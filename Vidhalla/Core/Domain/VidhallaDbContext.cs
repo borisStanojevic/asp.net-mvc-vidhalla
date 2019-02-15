@@ -14,8 +14,9 @@ namespace Vidhalla.Core.Domain
             return new VidhallaDbContext();
         }
 
-        public VidhallaDbContext() : base("VidhallaDbConnection")
+        public VidhallaDbContext() : base("name=VidhallaDbConnection")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder dbModelBuilder)
