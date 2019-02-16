@@ -88,13 +88,15 @@ main {
     }
 }
 
-footer {
+/*footer {
     background: #EEE;
     border-top: 1px solid #DDDDDD;
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
-}
+    position: absolute;
+    bottom: 0;
+}*/
 
 .videoUserSpan {
     display: block;
@@ -219,3 +221,6 @@ textarea {
     width: 10em;
 }
 
+#viewsSpan {
+    margin-bottom: 2rem;
+}

@@ -19,5 +19,20 @@ namespace Vidhalla.Controllers
         {
             return View();
         }
+
+        //public ActionResult Login()
+        //{
+            
+        //}
+
+        //public ActionResult Logout()
+        //{
+            
+        //}
+
+        //public ActionResult Register()
+        //{
+            
+        //}
     }
 }

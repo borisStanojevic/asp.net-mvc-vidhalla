@@ -13,10 +13,12 @@ namespace Vidhalla
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.LowercaseUrls = true;
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Videos", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "videos", action = "index", id = UrlParameter.Optional }
             );
         }
     }

@@ -13,7 +13,7 @@ namespace Vidhalla.ViewModels.Videos
         public int Id { get; set; }
         public string UploaderProfilePicture { get; set; }
         public string UploaderUsername { get; set; }
-        public String DateUploaded { get; set; }
+        public string DateUploaded { get; set; }
         public int ViewsCount { get; set; }
         public int LikesCount { get; set; }
         public int DislikesCount { get; set; }

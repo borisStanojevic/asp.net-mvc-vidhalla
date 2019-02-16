@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,10 +10,20 @@ namespace Vidhalla.Core.Domain
     {
 
         public int Id { get; set; }
+
+        [Required]
         public string Url { get; set; }
+
+        [Required]
+        [StringLength(127)]
         public string Title { get; set; }
+
+        [StringLength(1023)]
         public string Description { get; set; } = "";
+
+        [Required]
         public Visibility Visibility { get; set; } = Visibility.PUBLIC;
+
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsCommentingAllowed { get; set; } = true;
