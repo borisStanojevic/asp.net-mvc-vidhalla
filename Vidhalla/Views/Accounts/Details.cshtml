@@ -29,7 +29,7 @@
                         Upload Thumbnail :
                         <input type="file" multiple accept="image/*" name="thumbnail" class="form-control">
                     </div>
-                    <label class='errorMsgLabel'></label>
+                    <label class="errorMsgLabel"></label>
                     <button id="signUpBtn" class="btn btn-success btn-block">
                         <span class="glyphicon glyphicon-user"></span> Sign Up
                     </button>
@@ -133,7 +133,7 @@
                             <input name="ratingVisible" type="checkbox" value="">Rating Visible
                         </label>
                     </div>
-                    <label class='errorMsgLabel'></label>
+                    <label class="errorMsgLabel"></label>
                     <button id="uploadVideoBtn" class="btn btn-primary btn-block">
                         <span class="glyphicon glyphicon-upload"></span> Upload
                     </button>
@@ -210,7 +210,7 @@
 
 </div>
 
-<span class="container" style="display:block;content:'';clear:both">
+<div class="container" style="display:block;content:'';clear:both">
     <section style="width : 40%;float: left">
         <button id="showUploadVideoBtn" type="button" class="btn btn-success btn-md">
             <span class="glyphicon glyphicon-upload"></span> Upload
@@ -234,37 +234,37 @@
                     <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
                         <span class="glyphicon glyphicon-trash"></span> Delete
                     </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
                     <span> PREGLEDA </span>
                     <span style="display:block"> 01/01/2019 </span>
                 </div>
             </li>
-            
+
             <li>
                 <div>
                     <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                     <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
                         <span class="glyphicon glyphicon-trash"></span> Delete
                     </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
                     <span> PREGLEDA </span>
                     <span style="display:block"> 01/01/2019 </span>
                 </div>
             </li>
-            
+
             <li>
                 <div>
                     <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
                     <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
                         <span class="glyphicon glyphicon-trash"></span> Delete
                     </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new {id = 1}, null); </h4>
+                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
                     <span> PREGLEDA </span>
                     <span style="display:block"> 01/01/2019 </span>
                 </div>
 
             </li>
-            
+
         </ul>
     </section>
     <aside style="margin-top: 2.4em;width : 20%;float: right">
@@ -273,37 +273,42 @@
         <ul id="subscribedsList">
 
             <!-- Ovdje kacim dinamicki kreirane <li> korisnika koje korisnik cija se stranica posmatra, prati -->
-            
+
             <li>
                 <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
             </li>
 
             <hr>
-            
+
             <li>
                 <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
             </li>
 
             <hr>
-            
+
             <li>
                 <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
             </li>
 
             <hr>
-            
+
             <li>
                 <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
             </li>
 
             <hr>
-            
+
             <li>
                 <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
             </li>
 
             <hr>
-                
+
         </ul>
     </aside>
 </div>
+
+@section scripts
+{
+<script type="text/javascript" src=@Url.Content("~/Scripts/accounts-details.js")></script>
+}

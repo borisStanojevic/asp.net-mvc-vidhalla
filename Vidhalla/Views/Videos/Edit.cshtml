@@ -1,5 +1,4 @@
-﻿@using Vidhalla.Core.Domain
-@model Vidhalla.Core.Domain.Video
+﻿@model Vidhalla.Core.Domain.Video
 @{
     ViewBag.Title = "Edit";
 }
@@ -21,7 +20,7 @@
         </div>
         <div style="width: 30%; margin-bottom: 1em; margin-top: 0.5em;">
             @Html.LabelFor(v => v.Visibility)
-            @Html.EnumDropDownListFor(v => v.Visibility, "Select Visibility", new { @class = "form-control"})
+            @Html.EnumDropDownListFor(v => v.Visibility, "Select Visibility", new { @class = "form-control" })
         </div>
         <div class="form-group">
             <label>

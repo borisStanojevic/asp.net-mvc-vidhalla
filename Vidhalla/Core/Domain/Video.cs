@@ -21,9 +21,7 @@ namespace Vidhalla.Core.Domain
         [StringLength(1023)]
         public string Description { get; set; } = "";
 
-        [Required]
         public Visibility Visibility { get; set; } = Visibility.PUBLIC;
-
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsCommentingAllowed { get; set; } = true;
@@ -35,7 +33,7 @@ namespace Vidhalla.Core.Domain
         public virtual ICollection<VideoVote> Votes { get; set; }
 
 
-        protected Video()
+        public Video()
         {
             
         }

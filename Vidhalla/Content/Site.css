@@ -9,6 +9,12 @@
     border-radius: 0 !important;
 }
 
+
+@font-face {
+    font-family: "Nordic Alternative Regular";
+    src: url('fonts/Nordic Alternative Regular.ttf');
+}
+
 ul {
     list-style: none;
 }
@@ -28,7 +34,7 @@ ul {
 
 .navbar-brand strong {
     font-size: 1.6em;
-    font-family: 'Sedgwick Ave Display', cursive;
+    font-family: 'Nordic Alternative Regular';
 }
 
 .navbar-brand
@@ -121,8 +127,7 @@ a:hover {
 
     .ghostBtn:focus,
     .ghostBtn:active
-    .ghostBtn:hover
-    {
+    .ghostBtn:hover {
         background: transparent;
     }
 

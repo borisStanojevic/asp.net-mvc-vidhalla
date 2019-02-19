@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Vidhalla.Core.Domain;
@@ -27,15 +29,52 @@ namespace Vidhalla.Controllers
             }
         */
 
-        // GET: Videos
-        public ActionResult Index()
+        // GET: Videos?sortOrder='key-direction'
+        public ActionResult Index(string sortOrder)
         {
-            IEnumerable<Video> videos = _unitOfWork.Videos.GetAll();
-            ICollection<IndexViewModel> viewModel = new List<IndexViewModel>();
-            foreach (Video video in videos)
+            string sortingKey;
+            SortingDirection sortingDirection;
+
+            //Ako je proslijedjen string za sortiranje onda...
+            if (!string.IsNullOrEmpty(sortOrder))
             {
-                viewModel.Add(new IndexViewModel(video));         
+                //Pokusaj da izvadis kljuc i direkciju po kojima se sortira
+                //Zasto pokusaj ? Pa ako neko proslijedi ?sortOrder='key|direction' kod ce da pukne
+                //jer je delimiter '-'
+                try
+                {
+                    sortingKey = sortOrder.Split('-')[0];
+                    sortingDirection = sortOrder.Split('-')[1].Equals("desc") ? SortingDirection.DESC : SortingDirection.ASC;
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", "Videos");
+                }
             }
+            else
+            {
+                sortingKey = "dateUploaded";
+                sortingDirection = SortingDirection.DESC;
+            }
+
+            IEnumerable<Video> videos;
+            switch (sortingKey)
+            {
+                case "views":
+                    videos = _unitOfWork.Videos.GetAllByViews(sortingDirection);
+                    break;
+                case "title":
+                    videos = _unitOfWork.Videos.GetAllByTitle(sortingDirection);
+                    break;
+                case "uploader":
+                    videos = _unitOfWork.Videos.GetAllByUploader(sortingDirection);
+                    break;
+                default:
+                    videos = _unitOfWork.Videos.GetAllByDateUploaded(sortingDirection);
+                    break;
+
+            }
+            ICollection<IndexViewModel> viewModel = videos.Select(video => new IndexViewModel(video)).ToList();
 
             return View(viewModel);
         }

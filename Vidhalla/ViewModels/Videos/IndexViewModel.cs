@@ -15,8 +15,6 @@ namespace Vidhalla.ViewModels.Videos
         public string UploaderUsername { get; set; }
         public string DateUploaded { get; set; }
         public int ViewsCount { get; set; }
-        public int LikesCount { get; set; }
-        public int DislikesCount { get; set; }
 
         public IndexViewModel()
         {
@@ -32,8 +30,6 @@ namespace Vidhalla.ViewModels.Videos
             UploaderUsername = v.Uploader.Username;
             DateUploaded = v.DateUploaded.Date.ToShortDateString();
             ViewsCount = v.ViewsCount;
-            LikesCount = v.Votes.Where(vv => vv.Type == Vote.LIKE).ToList().Count();
-            DislikesCount = v.Votes.Where(vv => vv.Type == Vote.LIKE).ToList().Count();
         }
     }
 }

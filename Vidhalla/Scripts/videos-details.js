@@ -6,12 +6,12 @@
     $("#likeVideoBtn").on("click",
         e => {
             snackbar("You liked this video");
-            setTimeout(function () { $.mSnackbar().close(); }, 2800);
+            setTimeout(function () { $.mSnackbar().close(); }, 3000);
         });
 
     $("#subscribeBtn").on("click",
         e => {
             snackbar("Added to subscriptions");
-            setTimeout(function () { $.mSnackbar().close(); }, 2800);
+            setTimeout(function () { $.mSnackbar().close(); }, 3000);
         });
 });

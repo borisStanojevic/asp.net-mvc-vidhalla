@@ -20,6 +20,12 @@ namespace Vidhalla.Controllers
             return View();
         }
 
+        // GET: Edit/{id}
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
         //public ActionResult Login()
         //{
             

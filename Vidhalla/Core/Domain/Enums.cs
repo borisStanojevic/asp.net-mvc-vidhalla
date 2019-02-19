@@ -23,4 +23,10 @@ namespace Vidhalla.Core.Domain
         ADMIN        = 1,
         REGULAR_USER = 2
     }
+
+    public enum SortingDirection
+    {
+        ASC,
+        DESC
+    }
 }

@@ -4,70 +4,29 @@
     ViewBag.Title = "Home";
 }
 
-<header class="jumbotron">
-    <p>
-        <button class="btn btn-primary btn-lg ghostBtn">Start watching !</button>
-    </p>
-</header>
-
-<div style="margin-top: 5em;">
-    <button id="showSearchBtn" type="button" class="btn btn-default btn-lg">
-        <span class="glyphicon glyphicon-search"></span>
-    </button>
-</div>
+@section jumbotron
+{
+    <header class="jumbotron">
+        <p>
+            <button class="btn btn-primary btn-lg ghostBtn">Start watching </button>
+        </p>
+    </header>
+}
 
 <br>
 
-<section id="videosSearchSection">
-    <div class="well" style="width: 20%">
-        <form style="width: 100%">
-
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Video Name" name="videoNameInput">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="User" name="videoOwnerInput">
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" name="minViewsInput" min="0" placeholder="Views Min">
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" name="maxViewsInput" placeholder="Views Max">
-            </div>
-            <div class="form-group">
-                <div class="input-group date" id="minDateTimeInput">
-                    <input type="text" class="form-control" placeholder="From" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group date" id="maxDateTimeInput">
-                    <input type="text" class="form-control" placeholder="Up Until" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <a href="#" id="advancedSearchBtn" type="button" class="btn btn-default btn-md">Search</a>
-            </div>
-
-        </form>
-    </div>
-</section>
 <aside>
     <label>Sort by</label>
+ 
     <select id="sortSelect" class="form-control" title="Sort by">
-        <option value="viewsDesc">Views, DESC</option>
-        <option value="viewsAsc">Views, ASC</option>
-        <option value="videoNameAsc">Name, A-Z</option>
-        <option value="videoNameDesc">Name, Z-A</option>
-        <option value="videoOwnerAsc">User, A-Z</option>
-        <option value="videoOwnerDesc">User, Z-A</option>
-        <option value="dateTimeAsc">Upload Date, ASC</option>
-        <option value="dateTimeDesc">Upload Date, DESC</option>
+        <option value="views-asc">Views, ASC</option>
+        <option value="views-desc">Views, DESC</option>
+        <option value="title-asc">Title, ASC</option>
+        <option value="title-desc">Title, DESC</option>
+        <option value="uploader-asc">Uploader, ASC</option>
+        <option value="uploader-desc">Uploader, DESC</option>
+        <option value="dateUploaded-asc">Date uploaded, ASC</option>
+        <option value="dateUploaded-desc">Date uploaded, DESC</option>
     </select>
 </aside>
 
@@ -75,231 +34,236 @@
 <!-- Sekcija glavnog sadrzaja u kojoj ce biti combo box za sortiranje, side search bar, lista videa i paginacija -->
 <main id="main" class="container">
 
-    <h1>Most popular</h1>
+<h1>Most popular</h1>
 
-    <section id="top5VideosSection">
-        <div class="row">
+<section id="top5VideosSection">
+    <div class="row">
             
-            @foreach (var video in Model)
-            {
-                <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                    <div class="embed-responsive embed-responsive-4by3">
-                        <iframe class="embed-responsive-item" src=@video.Url></iframe>
-                    </div>
-                    <h4>
-                        @Html.ActionLink(video.Title, "Details", "Videos", new {id = video.Id}, null)
-                    </h4>
-                    <span>
-                        <img src=@Url.Content($"~/Content/Images/{video.UploaderProfilePicture}") class="smallThumbnail">
-                        @Html.ActionLink(video.UploaderUsername, "Details", "Accounts", new {username = video.UploaderUsername}, null)
-                    </span>
-                    <br>
-                    <span>@video.ViewsCount views</span>
-                    <span> &nbsp; @video.DateUploaded</span>
+        @foreach (var video in Model)
+        {
+            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src=@video.Url></iframe>
                 </div>
-            }
+                <h4>
+                    @Html.ActionLink(video.Title, "Details", "Videos", new {id = video.Id}, null)
+                </h4>
+                <span>
+                    <img src=@Url.Content($"~/Content/Images/{video.UploaderProfilePicture}") class="smallThumbnail">
+                    @Html.ActionLink(video.UploaderUsername, "Details", "Accounts", new {username = video.UploaderUsername}, null)
+                </span>
+                <br>
+                <span>@video.ViewsCount views</span>
+                <span> &nbsp; @video.DateUploaded</span>
+            </div>
+        }
 
+    </div>
+</section>
+
+<!-- Linija koja razdvaja most popular videos od ostalih -->
+<hr>
+
+<h1>Videos</h1>
+
+<section id="videosSection">
+    <div class="row">
+            
+
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1 }, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123" }, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class="ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
         </div>
-    </section>
 
-    <!-- Linija koja razdvaja most popular videos od ostalih -->
-    <hr>
-
-    <h1>Videos</h1>
-
-    <section id="videosSection">
-        <div class="row">
-            
-
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1 }, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123" }, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class="ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
             </div>
-
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1 }, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123" }, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class="ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-            <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                </div>
-                <h4>
-                    @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
-                </h4>
-                <span>
-                    <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
-                    @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
-                </span>
-                <br>
-                <span>100 PREGLEDA</span>
-                <span>  "&nbsp;"  01/01/2019 </span>
-                <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
-            </div>
-            
-
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1 }, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123" }, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class="ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
         </div>
-    </section>
+
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+        <div class="videoDiv col-xs-12 col-sm-4 col-md-15 col-lg-15">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
+            </div>
+            <h4>
+                @Html.ActionLink("NASLOV", "Details", "Videos", new { id = 1}, null);
+            </h4>
+            <span>
+                <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail">
+                @Html.ActionLink("UPLOADER", "Details", "Accounts", new { username = "mitar123"}, null);
+            </span>
+            <br>
+            <span>100 PREGLEDA</span>
+            <span>  "&nbsp;"  01/01/2019 </span>
+            <div class = "ratingDiv">50 LAJKOVA  1 DISLAJKOVA</div>
+        </div>
+            
+
+    </div>
+</section>
 
 </main>
+    
+@section scripts
+{
+<script type="text/javascript" src=@Url.Content("~/Scripts/videos-index.js")></script>
+}
