@@ -30,13 +30,13 @@ namespace Vidhalla.EntitiesConfiguration
             HasMany(a => a.PostedComments).WithRequired(c => c.Commenter).WillCascadeOnDelete(false);
             //Svaki korisnik moze da se pretplati na N kanala(drugi korisnika) sto bi bila rekurzivna many to many veza
             HasMany(a => a.Subscribers).WithMany().Map(m =>
-            {
+            {               
                 m.ToTable("Subscriptions");
                 m.MapLeftKey("Subscribing_User_Id");
                 m.MapRightKey("Subscribed_User_Id");
             });
-            HasMany(a => a.VideoVotes).WithRequired(vv => vv.Owner).WillCascadeOnDelete(true);
-            HasMany(a => a.CommentVotes).WithRequired(cv => cv.Owner).WillCascadeOnDelete(true);
+            HasMany(a => a.VideoVotes).WithRequired(vv => vv.Owner).WillCascadeOnDelete();
+            HasMany(a => a.CommentVotes).WithRequired(cv => cv.Owner).WillCascadeOnDelete();
         }
     }
 }

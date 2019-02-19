@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Vidhalla.Controllers
 {
-    public class CommentsController : Controller
+    public class CommentsController : MyController
     {
         // GET: Comments
         public ActionResult Index()

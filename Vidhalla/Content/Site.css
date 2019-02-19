@@ -12,9 +12,16 @@
 
 @font-face {
     font-family: "Nordic Alternative Regular";
-    src: url('fonts/Nordic Alternative Regular.ttf');
+    src: url('../fonts/Nordic Alternative Regular.ttf');
 }
 
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: 1.5px solid red;
+}
 ul {
     list-style: none;
 }

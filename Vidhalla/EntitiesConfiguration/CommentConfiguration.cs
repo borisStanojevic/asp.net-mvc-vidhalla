@@ -16,7 +16,7 @@ namespace Vidhalla.EntitiesConfiguration
 
             HasRequired(c => c.Commenter).WithMany(a => a.PostedComments);
             HasRequired(c => c.Video).WithMany(v => v.Comments);
-            HasMany(c => c.Votes).WithRequired(cv => cv.Comment).WillCascadeOnDelete(true);
+            HasMany(c => c.Votes).WithRequired(cv => cv.Comment).WillCascadeOnDelete();
         }
     }
 }

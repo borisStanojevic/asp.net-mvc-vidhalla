@@ -18,6 +18,7 @@ namespace Vidhalla.Core.Repositories
         IEnumerable<Video> GetAllByTitle(SortingDirection sortingDirection);
         IEnumerable<Video> GetAllByUploader(SortingDirection sortingDirection);
         IEnumerable<Video> GetAllByDateUploaded(SortingDirection sortingDirection);
+        Video GetIncludeRelated(int id);
 
     }
 }

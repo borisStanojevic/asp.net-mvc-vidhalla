@@ -11,7 +11,6 @@ namespace Vidhalla.Core.Domain
 
         public int Id { get; set; }
 
-        [Required]
         public string Url { get; set; }
 
         [Required]
@@ -21,7 +20,9 @@ namespace Vidhalla.Core.Domain
         [StringLength(1023)]
         public string Description { get; set; } = "";
 
+        [Required]
         public Visibility Visibility { get; set; } = Visibility.PUBLIC;
+
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsCommentingAllowed { get; set; } = true;

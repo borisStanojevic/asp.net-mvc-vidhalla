@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model Vidhalla.Core.Domain.Account
 
 @{
     ViewBag.Title = "Details";
@@ -166,43 +166,15 @@
             Ovdje stoji opis kanala i tako dalje i tako dalje i tako dalje i tako blize i tako blize i tako blize
         </p>
 
-        <button id="showEditUserBtn" type="button" class="btn btn-info">Edit</button>
-        <button id="deleteUserBtn" type="button" class="btn btn-danger" value="block">Delete</button>
-
-        <section style="display: none;" id="editChannelSection">
-            <form id="editUserForm" style="width: 30%">
-                <br>
-                <div class="form-group">
-                    <input name="firstName" type="text" class="form-control" placeholder="First Name">
-                </div>
-                <div class="form-group">
-                    <input name="lastName" type="text" class="form-control" placeholder="Last Name">
-                </div>
-                <div class="form-group">
-                    <input name="password" type="text" class="form-control" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <input name="channelDescription" type="text" class="form-control" placeholder="Channel Description">
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="roleSelect">
-                        <option value="USER"> User</option>
-                        <option value="ADMIN"> Admin</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input name="email" type="text" class="form-control" placeholder="Email">
-                </div>
-                <label class="errorMsgLabel"></label>
-                <span>
-                    <button id="editUserBtn" type="button" class="btn btn-warning">
-                        <span class="glyphicon glyphicon-edit"></span> Edit
-                    </button>
-                    <!-- Block dugme treba samo admin da vidi -->
-                    <button id="blockUserBtn" type="button" class="btn btn-danger" value="block">Block</button>
-                </span>
-            </form>
-        </section>
+        @Html.ActionLink("Edit", "Edit", "Accounts", new { id = Model.Id }, new { @class = "btn btn-info", role = "button" })
+        @using (Html.BeginForm("Edit", "Accounts"))
+        {
+            @Html.HiddenFor(a => a.Id)
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        }
 
     </main>
 

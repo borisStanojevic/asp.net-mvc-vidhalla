@@ -14,4 +14,5 @@
             snackbar("Added to subscriptions");
             setTimeout(function () { $.mSnackbar().close(); }, 3000);
         });
+
 });

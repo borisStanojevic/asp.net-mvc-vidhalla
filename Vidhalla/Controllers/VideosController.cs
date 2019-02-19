@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Vidhalla.Core.Domain;
 using Vidhalla.Persistence;
 using Vidhalla.ViewModels.Videos;
 
 namespace Vidhalla.Controllers
 {
-    public class VideosController : Controller
+    public class VideosController : MyController
     {
-        private readonly UnitOfWork _unitOfWork;
-
-        public VideosController()
-        {
-            _unitOfWork = new UnitOfWork(new VidhallaDbContext());
-
-        }
-
         //Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         /*  if (!Directory.Exists(target)) 
             {
@@ -30,47 +24,36 @@ namespace Vidhalla.Controllers
         */
 
         // GET: Videos?sortOrder='key-direction'
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder = "dateUploaded-desc")
         {
             string sortingKey;
             SortingDirection sortingDirection;
 
-            //Ako je proslijedjen string za sortiranje onda...
-            if (!string.IsNullOrEmpty(sortOrder))
+            try
             {
-                //Pokusaj da izvadis kljuc i direkciju po kojima se sortira
-                //Zasto pokusaj ? Pa ako neko proslijedi ?sortOrder='key|direction' kod ce da pukne
-                //jer je delimiter '-'
-                try
-                {
-                    sortingKey = sortOrder.Split('-')[0];
-                    sortingDirection = sortOrder.Split('-')[1].Equals("desc") ? SortingDirection.DESC : SortingDirection.ASC;
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("Index", "Videos");
-                }
+                sortingKey = sortOrder.Split('-')[0];
+                sortingDirection = sortOrder.Split('-')[1].Equals("desc") ? SortingDirection.DESC : SortingDirection.ASC;
             }
-            else
+            catch (Exception)
             {
-                sortingKey = "dateUploaded";
-                sortingDirection = SortingDirection.DESC;
+                return RedirectToAction("Index");
             }
+
 
             IEnumerable<Video> videos;
             switch (sortingKey)
             {
                 case "views":
-                    videos = _unitOfWork.Videos.GetAllByViews(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByViews(sortingDirection);
                     break;
                 case "title":
-                    videos = _unitOfWork.Videos.GetAllByTitle(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByTitle(sortingDirection);
                     break;
                 case "uploader":
-                    videos = _unitOfWork.Videos.GetAllByUploader(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByUploader(sortingDirection);
                     break;
                 default:
-                    videos = _unitOfWork.Videos.GetAllByDateUploaded(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByDateUploaded(sortingDirection);
                     break;
 
             }
@@ -82,7 +65,9 @@ namespace Vidhalla.Controllers
         // GET: Videos/Details/5
         public ActionResult Details(int id)
         {
-            Video video = _unitOfWork.Videos.Get(id);
+            Video video = UnitOfWork.Videos.GetIncludeRelated(id);
+            if (video == null)
+                return HttpNotFound();
 
             return View(video);
         }
@@ -112,51 +97,49 @@ namespace Vidhalla.Controllers
         // GET: Videos/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Video video = UnitOfWork.Videos.Get(id);
+
+            if (video == null)
+                return HttpNotFound();
+
+            return View(video);
         }
 
         // POST: Videos/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Video video)
         {
-            try
-            {
-                // TODO: Add update logic here
+            if (!ModelState.IsValid)
+                return View(video);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            Video videoToUpdate = UnitOfWork.Videos.Get(video.Id);
 
-        // GET: Videos/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            string[] valuesToUpdate = {"Title", "Description", "Visibility",
+                                       "IsBlocked", "IsCommentingAllowed", "IsRatingVisible"
+                                      };
+            TryUpdateModel(videoToUpdate, "", valuesToUpdate);
+            UnitOfWork.SaveChanges();
+            return RedirectToAction("Details", new { id = videoToUpdate.Id });
+
         }
 
         // POST: Videos/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
         {
+            Video videoToDelete = UnitOfWork.Videos.GetIncludeRelated(id);
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                UnitOfWork.Videos.Delete(videoToDelete);
+                UnitOfWork.SaveChanges();
             }
-            catch
+            catch(DataException)
             {
-                return View();
             }
-        }
 
-        protected override void Dispose(bool disposing)
-        {
-            _unitOfWork.Dispose();
-            base.Dispose(disposing);
+            return RedirectToAction("Index");
         }
     }
 }

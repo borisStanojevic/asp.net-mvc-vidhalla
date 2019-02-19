@@ -15,50 +15,17 @@
             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4">Naziv Videa</iframe>
         </div>
         <br>
-        <button id="toggleEditBtn" type="button" class="btn btn-info">
-            <span class="glyphicon glyphicon-menu-down"></span>
-        </button>
-        <button id='deleteVideoBtn' type='button' class='btn btn-danger'>
-            <span class='glyphicon glyphicon-trash'></span> Delete
-        </button>
+        @Html.ActionLink("Edit", "Edit", "Videos", new {id = Model.Id}, new {@class="btn btn-info", role="button"})
+         
+        @using (Html.BeginForm("Delete", "Videos"))
+        {
+            @Html.HiddenFor(v => v.Id)
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        }
         <br>
-
-        <section id='editVideoSection' style="display: none">
-            <form style="width: 30%">
-                <br>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="description">
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="visibility">
-                        <option value="PUBLIC"> Public</option>
-                        <option value="UNLISTED"> Unlisted</option>
-                        <option value="PRIVATE"> Private</option>
-                    </select>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="commentsAllowed"> Allow Comments
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="ratingVisible"> Rating Visible
-                    </label>
-                </div>
-                <span>
-                    <button id='editVideoBtn' type='button' class='btn btn-warning'>
-                        <span class='glyphicon glyphicon-edit'></span> Edit
-                    </button>
-                    <!-- Block dugme treba samo admin da vidi -->
-                    <button id='blockVideoBtn' type='button' class='btn btn-danger'></button>
-                </span>
-                <label class="errorMsgLabel"></label>
-            </form>
-        </section>
 
         <h2>@Model.Title</h2>
         <span id="viewsSpan" style="display: block; margin-bottom: 0.8em; margin-top: 1em;">@Model.ViewsCount &nbsp;@(Model.ViewsCount == 1 ? "view" : "views")</span>

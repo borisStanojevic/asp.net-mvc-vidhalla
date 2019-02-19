@@ -31,6 +31,7 @@ namespace Vidhalla.Core.Domain
         [StringLength(255)]
         public string ChannelDescription { get; set; } = "";
 
+        [Required]
         public Role Role { get; set; } = Role.REGULAR_USER;
         public DateTime DateRegistered { get; set; }
         public bool IsBlocked { get; set; }
@@ -40,6 +41,11 @@ namespace Vidhalla.Core.Domain
         public virtual ICollection<Account> Subscribers { get; set; }
         public virtual ICollection<VideoVote> VideoVotes { get; set; }
         public virtual ICollection<CommentVote> CommentVotes { get; set; }
+
+        public Account()
+        {
+            IsBlocked = Role.Equals(Role.ADMIN) ? false : IsBlocked;
+        }
 
 
         public override bool Equals(object obj)

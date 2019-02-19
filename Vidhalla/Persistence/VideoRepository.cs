@@ -70,7 +70,7 @@ namespace Vidhalla.Persistence
         }
 
 
-        public override Video Get(int id)
+        public Video GetIncludeRelated(int id)
         {
             return DbContext.Set<Video>().Where(v => v.Id == id)
                                          .Include(v => v.Uploader)
