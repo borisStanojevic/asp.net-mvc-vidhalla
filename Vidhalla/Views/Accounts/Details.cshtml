@@ -1,102 +1,10 @@
-﻿@model Vidhalla.Core.Domain.Account
+﻿@model Vidhalla.ViewModels.Accounts.DetailsViewModel
 
 @{
     ViewBag.Title = "Details";
+    var account = Model.Account;
+    var subscribeds = Model.Subscribeds;
 }
-
-<div class="modal fade" id="signUpDialog" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sign Up</h4>
-            </div>
-            <div class="modal-body">
-                <form id="signUpForm" action="./SignupServlet" method="POST" enctype="multipart/form-data" role="form">
-                    <div class="form-group">
-                        <input name="username" type="text" class="form-control" placeholder="Enter Username" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="password" type="password" class="form-control" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="repeatedPassword" type="password" class="form-control" placeholder="Repeat Password" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="email" type="email" class="form-control" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        Upload Thumbnail :
-                        <input type="file" multiple accept="image/*" name="thumbnail" class="form-control">
-                    </div>
-                    <label class="errorMsgLabel"></label>
-                    <button id="signUpBtn" class="btn btn-success btn-block">
-                        <span class="glyphicon glyphicon-user"></span> Sign Up
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deleteVideoAlert" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Failed</h4>
-            </div>
-            <div class="modal-body">
-                <p>Please delete all comments that reference this video.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="loginDialog" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Login</h4>
-            </div>
-            <div class="modal-body">
-                <form id="#loginForm" role="form">
-                    <div class="form-group">
-                        <input name="username" type="text" class="form-control" placeholder="Enter Username" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="password" type="password" class="form-control" placeholder="Enter Password" required>
-                    </div>
-                    <label class='errorMsgLabel'></label>
-                    <button id="loginBtn" class="btn btn-success btn-block">
-                        <span class="glyphicon glyphicon-log-in"></span> Login
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deleteUserAlert" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Failed</h4>
-            </div>
-            <div class="modal-body">
-                <p>Please delete all videos that reference this user.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="uploadVideoDialog" role="dialog">
     <div class="modal-dialog">
@@ -146,8 +54,8 @@
 <div style="margin-top: 7em;" class="container">
 
     <main>
-        <img alt="Profile picture" src=@Url.Content("~/Content/Images/default.png") class="bigThumbnail">
-        <h1 id="username"> USERNAME </h1>
+        <img alt="Profile picture" src=@Url.Content($"~/Content/Images/{account.ProfilePicture}") class="bigThumbnail">
+        <h1 id="username"> @account.Username </h1>
 
         <form id="uploadImageForm" action="UploadImageServlet" method="POST" enctype="multipart/form-data" role="form">
             <input type="hidden" name="username"> Upload Thumbnail :
@@ -159,17 +67,15 @@
         </form>
 
         <span style="display:block;content:'';clear:both">
-            <span id="subscribersSpan" style='float: left'>BROJ SUBSCRIBERA</span>
-            <button style="float: right" id="subscribeBtn" type="button" class="btn btn-primary btn-lg"></button>
+            <span id="subscribersSpan" style="float: left"> @account.Subscribers.Count </span>
+            <button style="float: right" id="subscribeBtn" type="button" class="btn btn-primary btn-lg">Subscribe</button>
         </span>
-        <p id="channelInfo">
-            Ovdje stoji opis kanala i tako dalje i tako dalje i tako dalje i tako blize i tako blize i tako blize
-        </p>
+        <p id="channelInfo"> @account.ChannelDescription </p>
 
-        @Html.ActionLink("Edit", "Edit", "Accounts", new { id = Model.Id }, new { @class = "btn btn-info", role = "button" })
+        @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
         @using (Html.BeginForm("Edit", "Accounts"))
         {
-            @Html.HiddenFor(a => a.Id)
+            @Html.HiddenFor(m => m.Account.Id)
             @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-danger">
                 <span class="glyphicon glyphicon-trash"></span> Delete
@@ -199,82 +105,39 @@
         <br>
         <ul id="uploadedVideosList">
             <!--Ovdje kacim dinamicki kreirane <li> videa koje je korisnik cija se stranica posmatra, uploadovao  -->
-
-            <li>
-                <div>
-                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
-                        <span class="glyphicon glyphicon-trash"></span> Delete
-                    </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
-                    <span> PREGLEDA </span>
-                    <span style="display:block"> 01/01/2019 </span>
-                </div>
-            </li>
-
-            <li>
-                <div>
-                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
-                        <span class="glyphicon glyphicon-trash"></span> Delete
-                    </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
-                    <span> PREGLEDA </span>
-                    <span style="display:block"> 01/01/2019 </span>
-                </div>
-            </li>
-
-            <li>
-                <div>
-                    <iframe src="https://www.youtube.com/embed/qEja72NSg5Q?rel=0&amp;showinfo=0"></iframe>
-                    <button type="button" class="btn btn-danger deleteVideoBtn" data-id="ID UPLOADOVANGO VIDEA">
-                        <span class="glyphicon glyphicon-trash"></span> Delete
-                    </button>
-                    <h4> @Html.ActionLink("Naziv videa", "Details", "Videos", new { id = 1 }, null); </h4>
-                    <span> PREGLEDA </span>
-                    <span style="display:block"> 01/01/2019 </span>
-                </div>
-
-            </li>
+            @foreach (var video in account.UploadedVideos)
+            {
+                <li>
+                    <div>
+                        <iframe src=@video.Url></iframe>
+                        <button type="button" class="btn btn-danger deleteVideoBtn" data-id=@video.Id>
+                            <span class="glyphicon glyphicon-trash"></span> Delete
+                        </button>
+                        <h4> @Html.ActionLink(video.Title, "Details", "Videos", new { id = video.Id }, new { }) </h4>
+                        <span> @video.ViewsCount views</span>
+                        <span style="display:block">Published on @video.DateUploaded.ToShortDateString() </span>
+                    </div>
+                </li>
+            }
 
         </ul>
     </section>
-    <aside style="margin-top: 2.4em;width : 20%;float: right">
+    <aside style="margin-top: 2.4em;width : 20%; float: right;">
         <h3>Following</h3>
         <br>
         <ul id="subscribedsList">
 
             <!-- Ovdje kacim dinamicki kreirane <li> korisnika koje korisnik cija se stranica posmatra, prati -->
+            @foreach (var subscribed in subscribeds)
+            {
+                <li>
+                    <a href=@Url.Action("Details", "Accounts", new {username = subscribed.Username})> <img src=@Url.Content($"~/Content/Images/{subscribed.ProfilePicture}") class="smallThumbnail"> @subscribed.Username </a>
+                    &nbsp;
+                    <span style="float: right; padding-top: 0.46em;">@subscribed.Subscribers.Count</span>
+                    <hr />
+                </li>
 
-            <li>
-                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
-            </li>
-
-            <hr>
-
-            <li>
-                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
-            </li>
-
-            <hr>
-
-            <li>
-                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
-            </li>
-
-            <hr>
-
-            <li>
-                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
-            </li>
-
-            <hr>
-
-            <li>
-                <a href=@Url.Action("Details", "Accounts", new {username = "mitar123"})> <img src=@Url.Content("~/Content/Images/default.png") class="smallThumbnail"> USERNAME</a>
-            </li>
-
-            <hr>
+            }
 
         </ul>
     </aside>
@@ -282,5 +145,5 @@
 
 @section scripts
 {
-<script type="text/javascript" src=@Url.Content("~/Scripts/accounts-details.js")></script>
+    <script type="text/javascript" src=@Url.Content("~/Scripts/accounts-details.js")></script>
 }

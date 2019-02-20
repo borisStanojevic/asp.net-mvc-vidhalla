@@ -9,8 +9,7 @@ namespace Vidhalla.Core.Repositories
 {
     public interface IAccountRepository : IGenericRepository<Account>
     {
-        //GetUserWithVideos
-        //GetUserWithLikes
-    
+        Account GetIncludeRelated(string username);
+        IEnumerable<Account> GetSubscribeds(int id);
     }
 }

@@ -7,22 +7,28 @@ using System.Web;
 using System.Web.Mvc;
 using Vidhalla.Core.Domain;
 using Vidhalla.Persistence;
+using Vidhalla.ViewModels.Accounts;
 
 namespace Vidhalla.Controllers
 {
     public class AccountsController : MyController
     {
-        //    GET: Details/{id
-        //}
-        //public ActionResult Details(int id, string username)
-        //{
-        //    if (id <= 0 && username == null)
-        //        return HttpBadRequest();
-        //    Account account;
+        [Route("accounts/details/{username:regex(^\\w{6,31}$}")]
+        public ActionResult Details(string username)
+        {
+            if (username == null)
+                return HttpBadRequest();
+            var account = UnitOfWork.Accounts.GetIncludeRelated(username);
+            if (account == null)
+                return HttpNotFound();
+            var subscribeds = UnitOfWork.Accounts.GetSubscribeds(account.Id);
 
-        //}
+            var viewModel = new DetailsViewModel(account, subscribeds);
 
-        // GET: Edit/{id}
+            return View(viewModel);
+        }
+
+
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -33,6 +39,7 @@ namespace Vidhalla.Controllers
 
             return View(account);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -60,10 +67,12 @@ namespace Vidhalla.Controllers
             }
             catch (DataException)
             {
-                //Uradi nesto sa exceptionom ?        
+                return View("Error");
             }
 
             return View("Details", accountToUpdate);
         }
+
+
     }
 }
