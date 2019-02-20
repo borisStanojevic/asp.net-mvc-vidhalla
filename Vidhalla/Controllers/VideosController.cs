@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -65,7 +66,9 @@ namespace Vidhalla.Controllers
         // GET: Videos/Details/5
         public ActionResult Details(int id)
         {
-            Video video = UnitOfWork.Videos.GetIncludeRelated(id);
+            if (id <= 0)
+                return HttpBadRequest();
+            var video = UnitOfWork.Videos.GetIncludeRelated(id);
             if (video == null)
                 return HttpNotFound();
 
@@ -97,8 +100,9 @@ namespace Vidhalla.Controllers
         // GET: Videos/Edit/5
         public ActionResult Edit(int id)
         {
-            Video video = UnitOfWork.Videos.Get(id);
-
+            if (id <= 0)
+                return HttpBadRequest();
+            var video = UnitOfWork.Videos.Get(id);
             if (video == null)
                 return HttpNotFound();
 
@@ -108,18 +112,33 @@ namespace Vidhalla.Controllers
         // POST: Videos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Video video)
+        public ActionResult Edit(int id, Video video)
         {
+            if (id <= 0)
+                return HttpBadRequest();
             if (!ModelState.IsValid)
                 return View(video);
+            var videoToUpdate = UnitOfWork.Videos.Get(video.Id);
+            if (videoToUpdate == null)
+                return HttpNotFound();
 
-            Video videoToUpdate = UnitOfWork.Videos.Get(video.Id);
+            string[] valuesToUpdate =
+            {
+                "Title", "Description", "Visibility",
+                "IsBlocked", "IsCommentingAllowed", "IsRatingVisible"
+            };
+            var modelUpdated = TryUpdateModel(videoToUpdate, "", valuesToUpdate);
+            if (!modelUpdated)
+                return View(video);
+            try
+            {
+                UnitOfWork.SaveChanges();
+            }
+            catch (DataException)
+            {
+                return View("Error");
+            }
 
-            string[] valuesToUpdate = {"Title", "Description", "Visibility",
-                                       "IsBlocked", "IsCommentingAllowed", "IsRatingVisible"
-                                      };
-            TryUpdateModel(videoToUpdate, "", valuesToUpdate);
-            UnitOfWork.SaveChanges();
             return RedirectToAction("Details", new { id = videoToUpdate.Id });
 
         }
@@ -129,14 +148,19 @@ namespace Vidhalla.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Video videoToDelete = UnitOfWork.Videos.GetIncludeRelated(id);
+            if (id <= 0)
+                return HttpBadRequest();
+            var videoToDelete = UnitOfWork.Videos.GetIncludeRelated(id);
+            if (videoToDelete == null)
+                return HttpNotFound();
             try
             {
                 UnitOfWork.Videos.Delete(videoToDelete);
                 UnitOfWork.SaveChanges();
             }
-            catch(DataException)
+            catch (DataException)
             {
+                return RedirectToAction("Details", new { id });
             }
 
             return RedirectToAction("Index");
