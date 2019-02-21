@@ -71,6 +71,8 @@ namespace Vidhalla.Controllers
             var video = UnitOfWork.Videos.GetIncludeRelated(id);
             if (video == null)
                 return HttpNotFound();
+            video.ViewsCount = ++video.ViewsCount;
+            UnitOfWork.SaveChanges();
 
             return View(video);
         }

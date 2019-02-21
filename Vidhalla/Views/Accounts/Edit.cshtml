@@ -11,7 +11,7 @@
     {
         <div class="form-group">
             @Html.LabelFor(a => a.Password)
-            @Html.PasswordFor(a => a.Password, new { @class = "form-control", autocomplete = "off" })
+            @Html.PasswordFor(a => a.Password, new { @class = "form-control", autocomplete = "off", value = Model.Password })
             @Html.ValidationMessageFor(a => a.Password)
         </div>
 
@@ -29,7 +29,7 @@
 
         <div class="form-group">
             @Html.LabelFor(a => a.ChannelDescription)
-            @Html.TextAreaFor(a => a.ChannelDescription, new { @class = "form-control", autocomplete = "off" })
+            @Html.TextAreaFor(a => a.ChannelDescription, new {@class = "form-control", autocomplete = "off"})
             @Html.ValidationMessageFor(a => a.ChannelDescription)
         </div>
 
@@ -44,7 +44,7 @@
                 @Html.CheckBoxFor(a => a.IsBlocked) Block
             </label>
         </div>
-        @Html.HiddenFor(a => a.Id)
+        @Html.HiddenFor(a => a.Username)
         @Html.AntiForgeryToken()
         <button type="submit" class="btn btn-warning" style="margin-bottom: 5em;">
             <span class="glyphicon glyphicon-edit"></span> Edit

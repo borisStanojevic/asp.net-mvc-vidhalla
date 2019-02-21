@@ -4,6 +4,7 @@
     ViewBag.Title = "Details";
     var account = Model.Account;
     var subscribeds = Model.Subscribeds;
+
 }
 
 <div class="modal fade" id="uploadVideoDialog" role="dialog">
@@ -54,17 +55,20 @@
 <div style="margin-top: 7em;" class="container">
 
     <main>
-        <img alt="Profile picture" src=@Url.Content($"~/Content/Images/{account.ProfilePicture}") class="bigThumbnail">
+        <img alt="Profile picture" src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = account.ProfilePicture}) class="bigThumbnail">
         <h1 id="username"> @account.Username </h1>
 
-        <form id="uploadImageForm" action="UploadImageServlet" method="POST" enctype="multipart/form-data" role="form">
-            <input type="hidden" name="username"> Upload Thumbnail :
-            <input type="file" multiple accept="image/*" name="thumbnail">
+        @using (Html.BeginForm("UploadProfilePicture", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input id="accountId" name="accountId" type="hidden" value=@account.Id>
             <div class="form-group">
-                <button id="uploadImageBtn" type="button" class="btn btn-default"> Upload</button>
+                <input type="file" multiple accept="image/*" name="picture" id="picture">
             </div>
-            <label class="errorMsgLabel"></label>
-        </form>
+            <div class="form-group">
+                <button id="uploadImageBtn" type="submit" class="btn btn-default"> Upload</button>
+            </div>
+        }
 
         <span style="display:block;content:'';clear:both">
             <span id="subscribersSpan" style="float: left"> @account.Subscribers.Count </span>
@@ -73,7 +77,7 @@
         <p id="channelInfo"> @account.ChannelDescription </p>
 
         @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
-        @using (Html.BeginForm("Edit", "Accounts"))
+        @using (Html.BeginForm("Delete", "Accounts", FormMethod.Post))
         {
             @Html.HiddenFor(m => m.Account.Id)
             @Html.AntiForgeryToken()

@@ -49,7 +49,7 @@
                     @Html.ActionLink(video.Title, "Details", "Videos", new {id = video.Id}, null)
                 </h4>
                 <span>
-                    <img src=@Url.Content($"~/Content/Images/{video.UploaderProfilePicture}") class="smallThumbnail">
+                    <img alt="" src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = video.UploaderProfilePicture}) class="smallThumbnail">
                     @Html.ActionLink(video.UploaderUsername, "Details", "Accounts", new {username = video.UploaderUsername}, null)
                 </span>
                 <br>

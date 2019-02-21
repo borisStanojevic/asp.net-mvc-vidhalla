@@ -19,15 +19,15 @@ namespace Vidhalla.Core.Domain
         public string Password { get; set; }
         public string ProfilePicture { get; set; } = "default.png";
 
-        [Display(Description = "First Name")]
+        [Display(Name = "First Name")]
         [StringLength(31)]
         public string FirstName { get; set; } = "";
 
-        [Display(Description = "Last Name")]
+        [Display(Name = "Last Name")]
         [StringLength(63)]
         public string LastName { get; set; } = "";
 
-        [Display(Description = "Channel Description")]
+        [Display(Name = "Channel Description")]
         [StringLength(255)]
         public string ChannelDescription { get; set; } = "";
 
@@ -58,5 +58,6 @@ namespace Vidhalla.Core.Domain
         {
             return $"Id: {Id} Username: {Username} Role: {Role.ToString()}";
         }
+
     }
 }

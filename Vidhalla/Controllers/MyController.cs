@@ -18,6 +18,7 @@ namespace Vidhalla.Controllers
             UnitOfWork = new UnitOfWork(new VidhallaDbContext());
         }
 
+
         protected HttpStatusCodeResult HttpBadRequest()
         {
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

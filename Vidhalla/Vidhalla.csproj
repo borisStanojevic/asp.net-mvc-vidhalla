@@ -237,13 +237,13 @@
     <Compile Include="Persistence\VideoVoteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Accounts\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\Accounts\UploadPictureViewModel.cs" />
     <Compile Include="ViewModels\Videos\IndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\cover.png" />
-    <Content Include="Content\Images\default.png" />
     <Content Include="Content\mSnackbar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -291,6 +291,7 @@
     <Folder Include="Views\Comments\" />
     <Folder Include="Views\CommentVotes\" />
     <Folder Include="Views\My\" />
+    <Folder Include="Views\Upload\" />
     <Folder Include="Views\VideoVotes\" />
   </ItemGroup>
   <ItemGroup>
