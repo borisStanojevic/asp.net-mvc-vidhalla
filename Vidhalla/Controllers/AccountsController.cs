@@ -7,18 +7,78 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Vidhalla.Core.Domain;
+using Vidhalla.Extensions;
+using Vidhalla.Filters;
 using Vidhalla.Persistence;
 using Vidhalla.ViewModels.Accounts;
+using static Vidhalla.Core.Domain.Role;
 
 namespace Vidhalla.Controllers
 {
     public class AccountsController : MyController
     {
 
+        public ActionResult Unauthenticated()
+        {
+            return Content("Neulogovan korisnik vidi");
+        }
+
+        [AllowRoles(REGULAR_USER)]
+        public ActionResult Authenticated()
+        {
+            return Content("Ulogovan vidi");
+        }
+
+        public ActionResult Login()
+        {
+            return Content("LOGIN STRANICA");
+        }
+
+        //public ActionResult Login()
+        //{
+        //    //Ako korisnik nije autentikovan vrati ga na login ako jeste vrati ga na indeks
+        //}
+
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            var account = UnitOfWork.Accounts.Get(a => a.Username.Equals(username));
+            if (account == null)
+            {
+                ModelState.AddModelError("", "Invalid username");
+                return View();
+            }
+            if (!account.Password.Equals(password))
+            {
+                ModelState.AddModelError("", "Invalid password");
+                return View();
+            }
+
+            var accountSessionModel = new AccountSessionModel
+            {
+                Username = account.Username,
+                Role = account.Role,
+                IsBlocked = account.IsBlocked
+            };
+
+            Session.SetAccount(accountSessionModel);
+
+            return RedirectToAction("Index", "Videos");
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Videos");
+        }
+
+
         [Route("accounts/details/{username:regex(^\\w{6,31}$)}")]
         public ActionResult Details(string username)
         {
+
             if (username == null)
                 return HttpBadRequest();
             var account = UnitOfWork.Accounts.GetIncludeRelated(username);
@@ -31,7 +91,7 @@ namespace Vidhalla.Controllers
             return View(viewModel);
         }
 
-
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -46,6 +106,7 @@ namespace Vidhalla.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Edit(int id, Account account)
         {
             if (id <= 0)
@@ -78,6 +139,7 @@ namespace Vidhalla.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult UploadProfilePicture(int accountId, HttpPostedFileBase picture)
         {
 

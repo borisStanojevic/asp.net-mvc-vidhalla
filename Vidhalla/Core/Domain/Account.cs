@@ -59,5 +59,10 @@ namespace Vidhalla.Core.Domain
             return $"Id: {Id} Username: {Username} Role: {Role.ToString()}";
         }
 
+        public bool IsAdmin()
+        {
+            return Role.Equals(Role.ADMIN);
+        }
+
     }
 }

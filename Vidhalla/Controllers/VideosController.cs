@@ -10,8 +10,10 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Vidhalla.Core.Domain;
+using Vidhalla.Filters;
 using Vidhalla.Persistence;
 using Vidhalla.ViewModels.Videos;
+using static Vidhalla.Core.Domain.Role;
 
 namespace Vidhalla.Controllers
 {
@@ -78,6 +80,7 @@ namespace Vidhalla.Controllers
         }
 
         // GET: Videos/Create
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Create()
         {
             return View();
@@ -85,6 +88,7 @@ namespace Vidhalla.Controllers
 
         // POST: Videos/Create
         [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Create(FormCollection collection)
         {
             try
@@ -99,7 +103,7 @@ namespace Vidhalla.Controllers
             }
         }
 
-        // GET: Videos/Edit/5
+        [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -111,8 +115,8 @@ namespace Vidhalla.Controllers
             return View(video);
         }
 
-        // POST: Videos/Edit/5
         [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Video video)
         {
@@ -147,6 +151,7 @@ namespace Vidhalla.Controllers
 
         // POST: Videos/Delete/5
         [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {

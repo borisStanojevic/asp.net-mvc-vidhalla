@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Vidhalla.Core.Domain;
+using Vidhalla.Extensions;
 using Vidhalla.Persistence;
 
 namespace Vidhalla.Controllers
@@ -17,7 +18,6 @@ namespace Vidhalla.Controllers
         {
             UnitOfWork = new UnitOfWork(new VidhallaDbContext());
         }
-
 
         protected HttpStatusCodeResult HttpBadRequest()
         {
