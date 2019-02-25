@@ -19,12 +19,6 @@ namespace Vidhalla.Controllers
 {
     public class VideosController : MyController
     {
-        //Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        /*  if (!Directory.Exists(target)) 
-            {
-                Directory.CreateDirectory(target);
-            }
-        */
 
         // GET: Videos?sortOrder='key-direction'
         public ActionResult Index(string sortOrder = "dateUploaded-desc")

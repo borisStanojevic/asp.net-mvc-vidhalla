@@ -15,8 +15,8 @@
             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4">Naziv Videa</iframe>
         </div>
         <br>
-        @Html.ActionLink("Edit", "Edit", "Videos", new {id = Model.Id}, new {@class="btn btn-info", role="button"})
-         
+        @Html.ActionLink("Edit", "Edit", "Videos", new { id = Model.Id }, new { @class = "btn btn-info", role = "button" })
+
         @using (Html.BeginForm("Delete", "Videos"))
         {
             @Html.HiddenFor(v => v.Id)
@@ -30,7 +30,7 @@
         <h2>@Model.Title</h2>
         <span id="viewsSpan" style="display: block; margin-bottom: 0.8em; margin-top: 1em;">@Model.ViewsCount &nbsp;@(Model.ViewsCount == 1 ? "view" : "views")</span>
         <span id="ownerSpan">
-            <img src=@Url.Content($"~/Content/Images/{Model.Uploader.ProfilePicture}") class="smallThumbnail">
+            <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = Model.Uploader.ProfilePicture}) class="smallThumbnail">
             @Html.ActionLink(Model.Uploader.Username, "Details", "Accounts", new { username = Model.Uploader.Username }, null)
         </span>
         <span id="dtUploadedSpan">&nbsp; published on @Model.DateUploaded.Date.ToShortDateString()</span>
@@ -131,7 +131,7 @@
             <li>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src=@Url.Content($"~/Content/Images/{commenter.ProfilePicture}") class="smallThumbnail">
+                        <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = commenter.ProfilePicture}) class="smallThumbnail">
                         @Html.ActionLink(commenter.Username, "Details", "Accounts", new { username = commenter.Username }, null);
                         <span> posted on @c.DatePosted.Date.ToShortDateString()</span>
                         <button type="button" class="btn btn-default btn-sm editCommentBtn" data-index="INDEX" data-commentid=@c.Id><span class="glyphicon glyphicon-edit"></span></button>

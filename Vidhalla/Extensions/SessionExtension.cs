@@ -5,12 +5,12 @@ namespace Vidhalla.Extensions
 {
     public static class SessionExtension
     {
-        public static void SetAccount(this HttpSessionStateBase session, AccountSessionModel accountSessionModel)
+        public static void SetAuthenticatedAccount(this HttpSessionStateBase session, AccountSessionModel accountSessionModel)
         {
             HttpContext.Current.Session["AccountInSession"] = accountSessionModel;
         }
 
-        public static AccountSessionModel GetAccount(this HttpSessionStateBase session)
+        public static AccountSessionModel GetAuthenticatedAccount(this HttpSessionStateBase session)
         {
             return (AccountSessionModel)HttpContext.Current.Session["AccountInSession"];
         }

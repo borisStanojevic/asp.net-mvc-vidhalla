@@ -20,50 +20,66 @@ namespace Vidhalla.Controllers
     public class AccountsController : MyController
     {
 
-        public ActionResult Unauthenticated()
+        public ActionResult SignUp()
         {
-            return Content("Neulogovan korisnik vidi");
+            return View();
         }
 
-        [AllowRoles(REGULAR_USER)]
-        public ActionResult Authenticated()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignUp(SignUpViewModel viewModel)
         {
-            return Content("Ulogovan vidi");
+            if (!ModelState.IsValid)
+                return View(viewModel);
+            var account = UnitOfWork.Accounts.Get(a => a.Username.Equals(viewModel.Username));
+            if (account != null)
+            {
+                ModelState.AddModelError("", "Username already exists");
+                return View(viewModel);
+            }
+
+            account = new Account()
+            {
+                Username = viewModel.Username,
+                Password = viewModel.Password,
+                Role = REGULAR_USER
+            };
+            UnitOfWork.Accounts.Add(account);
+            UnitOfWork.SaveChanges();
+
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()
         {
-            return Content("LOGIN STRANICA");
+            return View();
         }
 
-        //public ActionResult Login()
-        //{
-        //    //Ako korisnik nije autentikovan vrati ga na login ako jeste vrati ga na indeks
-        //}
-
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel viewModel)
         {
-            var account = UnitOfWork.Accounts.Get(a => a.Username.Equals(username));
+            var account = UnitOfWork.Accounts.Get(a => a.Username.Equals(viewModel.Username));
             if (account == null)
             {
                 ModelState.AddModelError("", "Invalid username");
-                return View();
+                return View(viewModel);
             }
-            if (!account.Password.Equals(password))
+            if (!account.Password.Equals(viewModel.Password))
             {
                 ModelState.AddModelError("", "Invalid password");
-                return View();
+                return View(viewModel);
             }
 
             var accountSessionModel = new AccountSessionModel
             {
+                Id = account.Id,
                 Username = account.Username,
                 Role = account.Role,
                 IsBlocked = account.IsBlocked
             };
 
-            Session.SetAccount(accountSessionModel);
+            AccountInSession = accountSessionModel;
 
             return RedirectToAction("Index", "Videos");
         }
@@ -73,7 +89,6 @@ namespace Vidhalla.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Videos");
         }
-
 
         [Route("accounts/details/{username:regex(^\\w{6,31}$)}")]
         public ActionResult Details(string username)
@@ -96,13 +111,20 @@ namespace Vidhalla.Controllers
         {
             if (id <= 0)
                 return HttpBadRequest();
-            var account = UnitOfWork.Accounts.Get(id);
-            if (account == null)
+            var accountToEdit = UnitOfWork.Accounts.Get(id);
+            if (accountToEdit == null)
                 return HttpNotFound();
 
-            return View(account);
-        }
+            if (!AccountInSession.IsAdmin())
+            {
+                if (!AccountInSession.Is(accountToEdit))
+                    return Content("Why would you even think you can edit someone else's account ?");
+                if (AccountInSession.IsBlocked)
+                    return Content("You are blocked. You can not edit your account.");
+            }
 
+            return View(accountToEdit);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -113,28 +135,46 @@ namespace Vidhalla.Controllers
                 return HttpBadRequest();
             if (!ModelState.IsValid)
                 return View(account);
-            var accountToUpdate = UnitOfWork.Accounts.Get(account.Id);
-            if (accountToUpdate == null)
+            var accountToEdit = UnitOfWork.Accounts.Get(account.Id);
+            if (accountToEdit == null)
                 return HttpNotFound();
+
+            //Ako osoba koja pokusava da edituje nije admin onda...
+            if (!AccountInSession.IsAdmin())
+            {
+                //Ako neko pokusava da edituje tudji nalog ne dozvoli
+                if (!AccountInSession.Is(accountToEdit))
+                    return Content("Why would you even think you can edit someone else's account ?");
+                //U suprotnome proslo je prvu provjeru sto znaci da osoba koja edituje
+                //je upravo osoba ciji se nalog edituje
+                //Medjutim, ako je blokiran ne moze da edituje podatke
+                if (AccountInSession.IsBlocked)
+                    return Content("You are blocked. You can not edit your account.");
+            }
+
+            //Ako osoba pokusava da blokira sebe ili da si promijeni ulogu ne dozvoli bez obzira da li je admin
+            if (AccountInSession.Is(accountToEdit) && (account.IsBlocked != accountToEdit.IsBlocked || account.Role != accountToEdit.Role))
+                return Content("You can not block yourself nor change your role.");
 
             string[] valuesToUpdate =
             {
                 "Password", "FirstName", "LastName",
                 "ChannelDescription", "Role", "IsBlocked"
             };
-            var modelUpdated = TryUpdateModel(accountToUpdate, "", valuesToUpdate);
+            var modelUpdated = TryUpdateModel(accountToEdit, "", valuesToUpdate);
             if (!modelUpdated)
                 return View(account);
             try
             {
                 UnitOfWork.SaveChanges();
+
             }
             catch (DataException)
             {
                 return View("Error");
             }
 
-            return RedirectToAction("Details", new { username = accountToUpdate.Username });
+            return RedirectToAction("Details", new { username = accountToEdit.Username });
         }
 
         [HttpPost]

@@ -19,7 +19,7 @@ namespace Vidhalla.Persistence
 
         //====================================================================//
 
-        public T Get(int id)
+        public virtual T Get(int id)
         {
             return GenericContext.Set<T>().Find(id);
         }

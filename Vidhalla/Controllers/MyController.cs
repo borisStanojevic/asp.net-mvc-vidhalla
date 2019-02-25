@@ -14,6 +14,12 @@ namespace Vidhalla.Controllers
     {
         protected readonly UnitOfWork UnitOfWork;
 
+        protected AccountSessionModel AccountInSession
+        {
+            get => Session.GetAuthenticatedAccount();
+            set => Session.SetAuthenticatedAccount(value);
+        }
+
         public MyController()
         {
             UnitOfWork = new UnitOfWork(new VidhallaDbContext());

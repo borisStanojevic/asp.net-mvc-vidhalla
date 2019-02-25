@@ -1,0 +1,43 @@
+﻿@model Vidhalla.ViewModels.Accounts.SignUpViewModel
+
+@{
+    ViewBag.Title = "Sign up";
+}
+
+<div class="container" style="margin-top: 8.5em; width: 30%;">
+
+    <h2 style="margin-bottom: 1.3em;">Sign up</h2>
+
+    @using (Html.BeginForm("SignUp", "Accounts", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FirstName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName)
+        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "field-validation-error" })
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-success" style="margin-bottom: 5em;">
+            Sign up
+        </button>
+    }
+</div>

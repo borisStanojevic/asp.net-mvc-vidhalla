@@ -17,6 +17,7 @@ namespace Vidhalla.Core.Domain
         [Required]
         [StringLength(127)]
         public string Password { get; set; }
+
         public string ProfilePicture { get; set; } = "default.png";
 
         [Display(Name = "First Name")]
@@ -32,9 +33,32 @@ namespace Vidhalla.Core.Domain
         public string ChannelDescription { get; set; } = "";
 
         [Required]
-        public Role Role { get; set; } = Role.REGULAR_USER;
+        private Role _role = Role.REGULAR_USER;
+        public Role Role
+        {
+            get { return _role; }
+            set
+            {
+                _role = value;
+                if (_role == Role.ADMIN)
+                    IsBlocked = false;
+            }
+        }
+
         public DateTime DateRegistered { get; set; }
-        public bool IsBlocked { get; set; }
+
+        private bool _isBlocked;
+        public bool IsBlocked
+        {
+            get { return _isBlocked; }
+            set
+            {
+                _isBlocked = value;
+                if (Role == Role.ADMIN)
+                    _isBlocked = false;
+            }
+        }
+
         public bool IsDeleted { get; set; }
         public virtual ICollection<Video> UploadedVideos { get; set; }
         public virtual ICollection<Comment> PostedComments { get; set; }
@@ -44,7 +68,7 @@ namespace Vidhalla.Core.Domain
 
         public Account()
         {
-            IsBlocked = Role.Equals(Role.ADMIN) ? false : IsBlocked;
+            IsBlocked = Role != Role.ADMIN && IsBlocked;
         }
 
 
@@ -57,11 +81,6 @@ namespace Vidhalla.Core.Domain
         public override string ToString()
         {
             return $"Id: {Id} Username: {Username} Role: {Role.ToString()}";
-        }
-
-        public bool IsAdmin()
-        {
-            return Role.Equals(Role.ADMIN);
         }
 
     }

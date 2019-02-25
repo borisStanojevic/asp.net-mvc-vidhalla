@@ -79,5 +79,12 @@ namespace Vidhalla.Persistence
                                          .Include(v => v.Comments.Select(c => c.Votes))
                                          .SingleOrDefault();
         }
+
+        public override Video Get(int id)
+        {
+            return DbContext.Set<Video>().Where(v => v.Id == id)
+                                         .Include(v => v.Uploader)
+                                         .SingleOrDefault();
+        }
     }
 }

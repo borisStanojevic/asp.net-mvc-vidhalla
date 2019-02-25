@@ -1,9 +1,12 @@
-﻿@model Vidhalla.ViewModels.Accounts.DetailsViewModel
+﻿@using Vidhalla.Extensions
+@model Vidhalla.ViewModels.Accounts.DetailsViewModel
 
 @{
     ViewBag.Title = "Details";
     var account = Model.Account;
     var subscribeds = Model.Subscribeds;
+
+    var accountInSession = Session.GetAuthenticatedAccount();
 
 }
 
@@ -58,37 +61,53 @@
         <img alt="Profile picture" src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = account.ProfilePicture}) class="bigThumbnail">
         <h1 id="username"> @account.Username </h1>
 
-        @using (Html.BeginForm("UploadProfilePicture", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+        @* Ako neulogovan korisnik posmatra ne daj
+            Ako je ulogovani korisnik vlasnik naloga koji se posmatra a nije admin onda vidi da li je blokiran ako jeste ne daj
+             Ako ulogovani korisnik nije vlasnik i nije admin ne daj
+        *@
+
+        @if (accountInSession != null && (accountInSession.IsAdmin() || (accountInSession.Is(account) && !account.IsBlocked)))
         {
-            @Html.AntiForgeryToken()
-            <input id="accountId" name="accountId" type="hidden" value=@account.Id>
-            <div class="form-group">
-                <input type="file" multiple accept="image/*" name="picture" id="picture">
-            </div>
-            <div class="form-group">
-                <button id="uploadImageBtn" type="submit" class="btn btn-default"> Upload</button>
-            </div>
+            using (Html.BeginForm("UploadProfilePicture", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <input id="accountId" name="accountId" type="hidden" value=@account.Id>
+                <div class="form-group">
+                    <input type="file" multiple accept="image/*" name="picture" id="picture">
+                </div>
+                <div class="form-group">
+                    <button id="uploadImageBtn" type="submit" class="btn btn-default"> Upload</button>
+                </div>
+            }
+
+            @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
+
         }
+
+        @if (accountInSession != null && accountInSession.IsAdmin())
+        {
+            using (Html.BeginForm("Delete", "Accounts", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Account.Id)
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> Delete
+                </button>
+            }
+        }
+
 
         <span style="display:block;content:'';clear:both">
             <span id="subscribersSpan" style="float: left"> @account.Subscribers.Count </span>
             <button style="float: right" id="subscribeBtn" type="button" class="btn btn-primary btn-lg">Subscribe</button>
         </span>
-        <p id="channelInfo"> @account.ChannelDescription </p>
+        <p id="channelInfo" style="margin-bottom: 2em;"> @account.ChannelDescription </p>
 
-        @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
-        @using (Html.BeginForm("Delete", "Accounts", FormMethod.Post))
-        {
-            @Html.HiddenFor(m => m.Account.Id)
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-            </button>
-        }
+
 
     </main>
 
-    <hr>
+    <hr style="padding-top: 2em;">
 
 </div>
 
@@ -135,7 +154,7 @@
             @foreach (var subscribed in subscribeds)
             {
                 <li>
-                    <a href=@Url.Action("Details", "Accounts", new {username = subscribed.Username})> <img src=@Url.Content($"~/Content/Images/{subscribed.ProfilePicture}") class="smallThumbnail"> @subscribed.Username </a>
+                    <a href=@Url.Action("Details", "Accounts", new {username = subscribed.Username})> <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = subscribed.ProfilePicture}) class="smallThumbnail"> @subscribed.Username </a>
                     &nbsp;
                     <span style="float: right; padding-top: 0.46em;">@subscribed.Subscribers.Count</span>
                     <hr />
