@@ -27,7 +27,7 @@ namespace Vidhalla.Migrations
                 + " VALUES "
                 + "('saban123', '123456', 'default.png', 'Saban', 'Sabanovic', 'Ovo je kanal Sabana Sabanovica', 1, '2012-01-01', 0, 0)");
         }
-        
+
         public override void Down()
         {
         }

@@ -16,7 +16,7 @@ namespace Vidhalla.Core.Domain
 
         public VidhallaDbContext() : base("name=VidhallaDbConnection")
         {
-            this.Configuration.LazyLoadingEnabled = true;
+            Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder dbModelBuilder)
@@ -28,7 +28,6 @@ namespace Vidhalla.Core.Domain
             dbModelBuilder.Configurations.Add(new VideoConfiguration());
             dbModelBuilder.Configurations.Add(new CommentConfiguration());
             dbModelBuilder.Configurations.Add(new VideoVoteConfiguration());
-            dbModelBuilder.Configurations.Add(new CommentVoteConfiguration());
         }
     }
 }

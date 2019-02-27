@@ -19,5 +19,11 @@ namespace Vidhalla.Persistence
             get { return GenericContext as VidhallaDbContext; }
         }
 
+        //public void Add(Vote type, int videoId, int ownerId)
+        //{
+        //    string query = @"INSERT INTO VideoVotes"
+        //    DbContext.Set<VideoVote>().SQ
+        //}
+
     }
 }

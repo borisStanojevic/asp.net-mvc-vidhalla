@@ -64,7 +64,6 @@ namespace Vidhalla.Core.Domain
         public virtual ICollection<Comment> PostedComments { get; set; }
         public virtual ICollection<Account> Subscribers { get; set; }
         public virtual ICollection<VideoVote> VideoVotes { get; set; }
-        public virtual ICollection<CommentVote> CommentVotes { get; set; }
 
         public Account()
         {

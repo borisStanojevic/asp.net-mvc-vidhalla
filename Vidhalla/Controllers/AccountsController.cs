@@ -180,13 +180,10 @@ namespace Vidhalla.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowRoles(ADMIN, REGULAR_USER)]
-        public ActionResult UploadProfilePicture(int accountId, HttpPostedFileBase picture)
+        public ActionResult UploadProfilePicture(HttpPostedFileBase picture, int accountId = 0)
         {
-
-            //var picture = uploadPictureViewModel.PictureFile;
             if (picture == null)
                 return HttpBadRequest();
-            //var id = uploadPictureViewModel.AccountId;
             if (accountId <= 0 || string.Equals(picture.FileName, "default.png", StringComparison.OrdinalIgnoreCase))
                 return HttpBadRequest();
             var account = UnitOfWork.Accounts.Get(accountId);
@@ -196,12 +193,8 @@ namespace Vidhalla.Controllers
             try
             {
                 var picturesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                Debug.WriteLine(picturesFolder);
                 var pictureName = string.Concat(account.Username, Path.GetExtension(picture.FileName));
-
-                Debug.WriteLine(pictureName);
                 var pictureFullPath = Path.Combine(picturesFolder, pictureName);
-                Debug.WriteLine(pictureFullPath);
 
                 if (System.IO.File.Exists(pictureFullPath))
                     System.IO.File.Delete(pictureFullPath);
@@ -231,6 +224,62 @@ namespace Vidhalla.Controllers
             return File(pictureFullPath, "image/*");
         }
 
+        [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
+        public ActionResult Subscribe(int id = 0)
+        {
+            if (AccountInSession == null)
+                return RedirectToAction("Login");
+            if (id <= 0)
+                return HttpBadRequest();
+            var beingSubscribedTo = UnitOfWork.Accounts.GetIncludeSubscribers(id);
+            if (beingSubscribedTo == null)
+                return HttpNotFound();
 
+            if (AccountInSession.Is(beingSubscribedTo))
+                return Content("You can not subscribe to yourself.");
+            if (!AccountInSession.IsAdmin() && beingSubscribedTo.IsBlocked)
+                return Content("You can not subscribe to this user. He is blocked.");
+            if (!AccountInSession.IsAdmin() && AccountInSession.IsBlocked)
+                return Content("You are blocked. You can not subscribe to anyone.");
+
+
+            var isAlreadySubscribed = beingSubscribedTo.Subscribers.Any(s => AccountInSession.Is(s));
+            if (isAlreadySubscribed)
+                return Content("You are already subscribed. Perhaps you wanted to unsubscribe ?");
+
+            var subscriber = UnitOfWork.Accounts.Get(AccountInSession.Id);
+            beingSubscribedTo.Subscribers.Add(subscriber);
+            UnitOfWork.SaveChanges();
+
+            return Json(new { nextAction = "Unsubscribe" });
+        }
+
+        [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
+        public ActionResult Unsubscribe(int id = 0)
+        {
+            if (AccountInSession == null)
+                return RedirectToAction("Login");
+            if (id <= 0)
+                return HttpBadRequest();
+            var beingUnsubscribedFrom = UnitOfWork.Accounts.GetIncludeSubscribers(id);
+            if (beingUnsubscribedFrom == null)
+                return HttpNotFound();
+
+            if (AccountInSession.Is(beingUnsubscribedFrom))
+                return Content("Why would you even try to unsubscribe from yourself in the first place ?");
+
+            var isAlreadySubscribed = beingUnsubscribedFrom.Subscribers.Any(s => AccountInSession.Is(s));
+            if (!isAlreadySubscribed)
+                return Content("Why would you try to unsubscribe when you are not even subscribed yet ?");
+
+            var subscriber = UnitOfWork.Accounts.Get(AccountInSession.Id);
+            beingUnsubscribedFrom.Subscribers.Remove(subscriber);
+            UnitOfWork.SaveChanges();
+
+
+            return Json(new { nextAction = "Subscribe" });
+        }
     }
 }

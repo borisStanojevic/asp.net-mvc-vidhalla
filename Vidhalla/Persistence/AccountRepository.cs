@@ -26,16 +26,22 @@ namespace Vidhalla.Persistence
                 .Include(a => a.PostedComments)
                 .Include(a => a.Subscribers)
                 .Include(a => a.VideoVotes)
-                .Include(a => a.CommentVotes)
                 .SingleOrDefault();
+        }
+
+        public Account GetIncludeSubscribers(int id)
+        {
+            return DbContext.Set<Account>().Where(a => a.Id == id)
+                                           .Include(a => a.Subscribers)
+                                           .SingleOrDefault();
         }
 
         public IEnumerable<Account> GetSubscribeds(int id)
         {
             //var account = DbContext.Set<Account>().Find(id);
             const string query = @"SELECT * FROM Accounts WHERE Id IN "
-                               + "(SELECT Subscribed_User_Id From Subscriptions "
-                               + "WHERE Subscribing_User_Id = {0})";
+                               + "(SELECT Subscribing_User_Id From Subscriptions "
+                               + "WHERE Subscribed_User_Id = {0})";
             return DbContext.Set<Account>().SqlQuery(query, id).ToList();
         }
     }

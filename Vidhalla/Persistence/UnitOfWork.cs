@@ -19,7 +19,6 @@ namespace Vidhalla.Persistence
             Comments = new CommentRepository(_context);
             Accounts = new AccountRepository(_context);
             VideoVotes = new VideoVoteRepository(_context);
-            CommentVotes = new CommentVoteRepository(_context);
         }
 
 
@@ -27,7 +26,6 @@ namespace Vidhalla.Persistence
         public IAccountRepository Accounts { get; }
         public ICommentRepository Comments { get; }
         public IVideoVoteRepository VideoVotes { get; }
-        public ICommentVoteRepository CommentVotes { get; }
 
 
         public void Dispose()

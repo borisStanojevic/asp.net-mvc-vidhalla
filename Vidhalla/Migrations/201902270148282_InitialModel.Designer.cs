@@ -7,13 +7,13 @@ namespace Vidhalla.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class PopulateAccounts : IMigrationMetadata
+    public sealed partial class InitialModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateAccounts));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902091554508_PopulateAccounts"; }
+            get { return "201902270148282_InitialModel"; }
         }
         
         string IMigrationMetadata.Source

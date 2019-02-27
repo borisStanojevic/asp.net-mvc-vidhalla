@@ -36,7 +36,6 @@ namespace Vidhalla.EntitiesConfiguration
                 m.MapRightKey("Subscribed_User_Id");
             });
             HasMany(a => a.VideoVotes).WithRequired(vv => vv.Owner).WillCascadeOnDelete();
-            HasMany(a => a.CommentVotes).WithRequired(cv => cv.Owner).WillCascadeOnDelete();
         }
     }
 }

@@ -9,11 +9,10 @@ namespace Vidhalla.Core
 {
     public interface IUnitOfWork : IDisposable
     {
-        IVideoRepository Videos { get;  }
+        IVideoRepository Videos { get; }
         IAccountRepository Accounts { get; }
-        ICommentRepository Comments { get;  }
-        IVideoVoteRepository VideoVotes { get;  }
-        ICommentVoteRepository CommentVotes { get;  }
+        ICommentRepository Comments { get; }
+        IVideoVoteRepository VideoVotes { get; }
 
         int SaveChanges();
     }

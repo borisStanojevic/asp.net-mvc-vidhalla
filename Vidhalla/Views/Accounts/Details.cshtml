@@ -8,6 +8,17 @@
 
     var accountInSession = Session.GetAuthenticatedAccount();
 
+    var nextAction = "";
+    if (accountInSession != null)
+    {
+        nextAction = account.Subscribers.Any(s => s.Id == accountInSession.Id) ? "Unsubscribe" : "Subscribe";
+    }
+    else
+    {
+
+        nextAction = "Subscribe";
+    }
+
 }
 
 <div class="modal fade" id="uploadVideoDialog" role="dialog">
@@ -59,11 +70,11 @@
 
     <main>
         <img alt="Profile picture" src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = account.ProfilePicture}) class="bigThumbnail">
-        <h1 id="username"> @account.Username </h1>
+        <h1 id="username"> @account.Username <br /> <text>@account.Subscribers.Count subscribers</text> </h1>
 
         @* Ako neulogovan korisnik posmatra ne daj
-            Ako je ulogovani korisnik vlasnik naloga koji se posmatra a nije admin onda vidi da li je blokiran ako jeste ne daj
-             Ako ulogovani korisnik nije vlasnik i nije admin ne daj
+        Ako je ulogovani korisnik vlasnik naloga koji se posmatra a nije admin onda vidi da li je blokiran ako jeste ne daj
+         Ako ulogovani korisnik nije vlasnik i nije admin ne daj
         *@
 
         @if (accountInSession != null && (accountInSession.IsAdmin() || (accountInSession.Is(account) && !account.IsBlocked)))
@@ -83,7 +94,6 @@
             @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
 
         }
-
         @if (accountInSession != null && accountInSession.IsAdmin())
         {
             using (Html.BeginForm("Delete", "Accounts", FormMethod.Post))
@@ -95,15 +105,7 @@
                 </button>
             }
         }
-
-
-        <span style="display:block;content:'';clear:both">
-            <span id="subscribersSpan" style="float: left"> @account.Subscribers.Count </span>
-            <button style="float: right" id="subscribeBtn" type="button" class="btn btn-primary btn-lg">Subscribe</button>
-        </span>
-        <p id="channelInfo" style="margin-bottom: 2em;"> @account.ChannelDescription </p>
-
-
+        <p id="channelInfo"> @account.ChannelDescription </p>
 
     </main>
 
@@ -169,4 +171,5 @@
 @section scripts
 {
     <script type="text/javascript" src=@Url.Content("~/Scripts/accounts-details.js")></script>
+    <script type="text/javascript"> src=@Url.Content("~/Scripts/mSnackbar.min.js")</script>
 }

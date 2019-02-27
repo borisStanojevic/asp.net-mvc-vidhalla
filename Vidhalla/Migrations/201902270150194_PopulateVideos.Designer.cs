@@ -7,13 +7,13 @@ namespace Vidhalla.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class PopulateVideoVotes : IMigrationMetadata
+    public sealed partial class PopulateVideos : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateVideoVotes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateVideos));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902091628507_PopulateVideoVotes"; }
+            get { return "201902270150194_PopulateVideos"; }
         }
         
         string IMigrationMetadata.Source

@@ -9,6 +9,6 @@ namespace Vidhalla.Core.Repositories
 {
     public interface ICommentRepository : IGenericRepository<Comment>
     {
-        
+        void Add(string content, int videoId, int commenterId);
     }
 }

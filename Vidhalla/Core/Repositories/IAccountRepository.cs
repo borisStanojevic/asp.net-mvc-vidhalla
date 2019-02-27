@@ -11,5 +11,6 @@ namespace Vidhalla.Core.Repositories
     {
         Account GetIncludeRelated(string username);
         IEnumerable<Account> GetSubscribeds(int id);
+        Account GetIncludeSubscribers(int id);
     }
 }

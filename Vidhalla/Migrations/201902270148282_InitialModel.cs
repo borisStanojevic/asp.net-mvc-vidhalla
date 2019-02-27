@@ -27,21 +27,6 @@ namespace Vidhalla.Migrations
                 .Index(t => t.Username, unique: true);
             
             CreateTable(
-                "dbo.CommentVotes",
-                c => new
-                    {
-                        Comment_Id = c.Int(nullable: false),
-                        Owner_Id = c.Int(nullable: false),
-                        Type = c.Byte(nullable: false),
-                        DateCreated = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
-                    })
-                .PrimaryKey(t => new { t.Comment_Id, t.Owner_Id })
-                .ForeignKey("dbo.Comments", t => t.Comment_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Accounts", t => t.Owner_Id, cascadeDelete: true)
-                .Index(t => t.Comment_Id)
-                .Index(t => t.Owner_Id);
-            
-            CreateTable(
                 "dbo.Comments",
                 c => new
                     {
@@ -72,7 +57,7 @@ namespace Vidhalla.Migrations
                         IsCommentingAllowed = c.Boolean(nullable: false),
                         IsRatingVisible = c.Boolean(nullable: false),
                         ViewsCount = c.Int(nullable: false),
-                        DatePosted = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        DateUploaded = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                         Uploader_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -116,8 +101,6 @@ namespace Vidhalla.Migrations
             DropForeignKey("dbo.Subscriptions", "Subscribed_User_Id", "dbo.Accounts");
             DropForeignKey("dbo.Subscriptions", "Subscribing_User_Id", "dbo.Accounts");
             DropForeignKey("dbo.Comments", "Commenter_Id", "dbo.Accounts");
-            DropForeignKey("dbo.CommentVotes", "Owner_Id", "dbo.Accounts");
-            DropForeignKey("dbo.CommentVotes", "Comment_Id", "dbo.Comments");
             DropForeignKey("dbo.VideoVotes", "Video_Id", "dbo.Videos");
             DropForeignKey("dbo.Comments", "Video_Id", "dbo.Videos");
             DropIndex("dbo.Subscriptions", new[] { "Subscribed_User_Id" });
@@ -127,14 +110,11 @@ namespace Vidhalla.Migrations
             DropIndex("dbo.Videos", new[] { "Uploader_Id" });
             DropIndex("dbo.Comments", new[] { "Commenter_Id" });
             DropIndex("dbo.Comments", new[] { "Video_Id" });
-            DropIndex("dbo.CommentVotes", new[] { "Owner_Id" });
-            DropIndex("dbo.CommentVotes", new[] { "Comment_Id" });
             DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.Subscriptions");
             DropTable("dbo.VideoVotes");
             DropTable("dbo.Videos");
             DropTable("dbo.Comments");
-            DropTable("dbo.CommentVotes");
             DropTable("dbo.Accounts");
         }
     }

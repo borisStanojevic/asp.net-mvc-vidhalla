@@ -76,7 +76,6 @@ namespace Vidhalla.Persistence
                                          .Include(v => v.Uploader)
                                          .Include(v => v.Votes)
                                          .Include(v => v.Comments.Select(c => c.Commenter))
-                                         .Include(v => v.Comments.Select(c => c.Votes))
                                          .SingleOrDefault();
         }
 

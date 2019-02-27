@@ -67,6 +67,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -161,78 +162,58 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
-    <Compile Include="Controllers\CommentVotesController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
-    <Compile Include="Controllers\VideoVotesController.cs" />
     <Compile Include="Core\Domain\Account.cs" />
     <Compile Include="Core\Domain\AccountSessionModel.cs" />
     <Compile Include="Core\Domain\Comment.cs" />
-    <Compile Include="Core\Domain\CommentVote.cs" />
+    <Compile Include="Core\Domain\CommentJsonModel.cs" />
     <Compile Include="Core\Domain\Enums.cs" />
     <Compile Include="Core\Domain\Video.cs" />
     <Compile Include="Core\Domain\VideoVote.cs" />
+    <Compile Include="Core\Domain\VideoVoteJsonModel.cs" />
     <Compile Include="Core\Domain\VidhallaDbContext.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IAccountRepository.cs" />
     <Compile Include="Core\Repositories\ICommentRepository.cs" />
-    <Compile Include="Core\Repositories\ICommentVoteRepository.cs" />
     <Compile Include="Core\Repositories\IGenericRepository.cs" />
     <Compile Include="Core\Repositories\IVideoRepository.cs" />
     <Compile Include="Core\Repositories\IVideoVoteRepository.cs" />
     <Compile Include="EntitiesConfiguration\AccountConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CommentConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CommentVoteConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\VideoConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\VideoVoteConfiguration.cs" />
     <Compile Include="Filters\AllowRoles.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091535557_InitialModel.cs" />
-    <Compile Include="Migrations\201902091535557_InitialModel.Designer.cs">
-      <DependentUpon>201902091535557_InitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201902270148282_InitialModel.cs" />
+    <Compile Include="Migrations\201902270148282_InitialModel.Designer.cs">
+      <DependentUpon>201902270148282_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091554508_PopulateAccounts.cs" />
-    <Compile Include="Migrations\201902091554508_PopulateAccounts.Designer.cs">
-      <DependentUpon>201902091554508_PopulateAccounts.cs</DependentUpon>
+    <Compile Include="Migrations\201902270149145_PopulateAccounts.cs" />
+    <Compile Include="Migrations\201902270149145_PopulateAccounts.Designer.cs">
+      <DependentUpon>201902270149145_PopulateAccounts.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091556552_PopulateVideos.cs" />
-    <Compile Include="Migrations\201902091556552_PopulateVideos.Designer.cs">
-      <DependentUpon>201902091556552_PopulateVideos.cs</DependentUpon>
+    <Compile Include="Migrations\201902270150194_PopulateVideos.cs" />
+    <Compile Include="Migrations\201902270150194_PopulateVideos.Designer.cs">
+      <DependentUpon>201902270150194_PopulateVideos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091617115_PopulateComments.cs" />
-    <Compile Include="Migrations\201902091617115_PopulateComments.Designer.cs">
-      <DependentUpon>201902091617115_PopulateComments.cs</DependentUpon>
+    <Compile Include="Migrations\201902270152406_PopulateComments.cs" />
+    <Compile Include="Migrations\201902270152406_PopulateComments.Designer.cs">
+      <DependentUpon>201902270152406_PopulateComments.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091628507_PopulateVideoVotes.cs" />
-    <Compile Include="Migrations\201902091628507_PopulateVideoVotes.Designer.cs">
-      <DependentUpon>201902091628507_PopulateVideoVotes.cs</DependentUpon>
+    <Compile Include="Migrations\201902270153311_PopulateVideoVotes.cs" />
+    <Compile Include="Migrations\201902270153311_PopulateVideoVotes.Designer.cs">
+      <DependentUpon>201902270153311_PopulateVideoVotes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902091632463_PopulateCommentVotes.cs" />
-    <Compile Include="Migrations\201902091632463_PopulateCommentVotes.Designer.cs">
-      <DependentUpon>201902091632463_PopulateCommentVotes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902091634017_PopulateSubscriptions.cs" />
-    <Compile Include="Migrations\201902091634017_PopulateSubscriptions.Designer.cs">
-      <DependentUpon>201902091634017_PopulateSubscriptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902152020060_AddIdToVoteClasses.cs" />
-    <Compile Include="Migrations\201902152020060_AddIdToVoteClasses.Designer.cs">
-      <DependentUpon>201902152020060_AddIdToVoteClasses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902152023194_RemoveIdFromVoteClasses.cs" />
-    <Compile Include="Migrations\201902152023194_RemoveIdFromVoteClasses.Designer.cs">
-      <DependentUpon>201902152023194_RemoveIdFromVoteClasses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902152114329_RenameDatePostedToDateUploaded.cs" />
-    <Compile Include="Migrations\201902152114329_RenameDatePostedToDateUploaded.Designer.cs">
-      <DependentUpon>201902152114329_RenameDatePostedToDateUploaded.cs</DependentUpon>
+    <Compile Include="Migrations\201902270154179_PopulateSubscriptions.cs" />
+    <Compile Include="Migrations\201902270154179_PopulateSubscriptions.Designer.cs">
+      <DependentUpon>201902270154179_PopulateSubscriptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\AccountRepository.cs" />
     <Compile Include="Persistence\CommentRepository.cs" />
-    <Compile Include="Persistence\CommentVoteRepository.cs" />
     <Compile Include="Persistence\GenericRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Persistence\VideoRepository.cs" />
@@ -254,6 +235,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\accounts-details.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -296,7 +278,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Comments\" />
-    <Folder Include="Views\CommentVotes\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="Views\VideoVotes\" />
   </ItemGroup>
@@ -310,35 +291,23 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902091535557_InitialModel.resx">
-      <DependentUpon>201902091535557_InitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270148282_InitialModel.resx">
+      <DependentUpon>201902270148282_InitialModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091554508_PopulateAccounts.resx">
-      <DependentUpon>201902091554508_PopulateAccounts.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270149145_PopulateAccounts.resx">
+      <DependentUpon>201902270149145_PopulateAccounts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091556552_PopulateVideos.resx">
-      <DependentUpon>201902091556552_PopulateVideos.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270150194_PopulateVideos.resx">
+      <DependentUpon>201902270150194_PopulateVideos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091617115_PopulateComments.resx">
-      <DependentUpon>201902091617115_PopulateComments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270152406_PopulateComments.resx">
+      <DependentUpon>201902270152406_PopulateComments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091628507_PopulateVideoVotes.resx">
-      <DependentUpon>201902091628507_PopulateVideoVotes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270153311_PopulateVideoVotes.resx">
+      <DependentUpon>201902270153311_PopulateVideoVotes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091632463_PopulateCommentVotes.resx">
-      <DependentUpon>201902091632463_PopulateCommentVotes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902091634017_PopulateSubscriptions.resx">
-      <DependentUpon>201902091634017_PopulateSubscriptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902152020060_AddIdToVoteClasses.resx">
-      <DependentUpon>201902152020060_AddIdToVoteClasses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902152023194_RemoveIdFromVoteClasses.resx">
-      <DependentUpon>201902152023194_RemoveIdFromVoteClasses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902152114329_RenameDatePostedToDateUploaded.resx">
-      <DependentUpon>201902152114329_RenameDatePostedToDateUploaded.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902270154179_PopulateSubscriptions.resx">
+      <DependentUpon>201902270154179_PopulateSubscriptions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

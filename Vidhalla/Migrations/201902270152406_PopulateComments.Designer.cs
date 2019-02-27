@@ -7,13 +7,13 @@ namespace Vidhalla.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddIdToVoteClasses : IMigrationMetadata
+    public sealed partial class PopulateComments : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddIdToVoteClasses));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateComments));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902152020060_AddIdToVoteClasses"; }
+            get { return "201902270152406_PopulateComments"; }
         }
         
         string IMigrationMetadata.Source

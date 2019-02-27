@@ -14,6 +14,7 @@ using Vidhalla.Filters;
 using Vidhalla.Persistence;
 using Vidhalla.ViewModels.Videos;
 using static Vidhalla.Core.Domain.Role;
+using static Vidhalla.Core.Domain.Visibility;
 
 namespace Vidhalla.Controllers
 {
@@ -60,51 +61,76 @@ namespace Vidhalla.Controllers
         }
 
         // GET: Videos/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id = 0)
         {
             if (id <= 0)
                 return HttpBadRequest();
             var video = UnitOfWork.Videos.GetIncludeRelated(id);
             if (video == null)
                 return HttpNotFound();
+
+            var videoIsPrivate = video.Visibility == PRIVATE;
+            var videoIsBlocked = video.IsBlocked;
+
+            if (AccountInSession == null)
+            {
+                if (videoIsPrivate || videoIsBlocked)
+                    return Content(videoIsPrivate ? "This video is private." : "This video is blocked.");
+            }
+            else if (!AccountInSession.IsAdmin())
+            {
+                if (!AccountInSession.Is(video.Uploader) && (videoIsPrivate || videoIsBlocked))
+                    return Content(videoIsPrivate ? "This video is private." : "This video is blocked.");
+            }
+
             video.ViewsCount = ++video.ViewsCount;
             UnitOfWork.SaveChanges();
 
             return View(video);
         }
 
-        // GET: Videos/Create
-        [AllowRoles(ADMIN, REGULAR_USER)]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: Videos/Create
+        //[AllowRoles(ADMIN, REGULAR_USER)]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: Videos/Create
-        [HttpPost]
-        [AllowRoles(ADMIN, REGULAR_USER)]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //// POST: Videos/Create
+        //[HttpPost]
+        //[AllowRoles(ADMIN, REGULAR_USER)]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         [AllowRoles(ADMIN, REGULAR_USER)]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id = 0)
         {
             if (id <= 0)
                 return HttpBadRequest();
             var video = UnitOfWork.Videos.Get(id);
             if (video == null)
                 return HttpNotFound();
+
+            if (!AccountInSession.IsAdmin())
+            {
+                if (!AccountInSession.Is(video.Uploader))
+                    return Content("Why would you even think you can edit someone else's video ?");
+                if (AccountInSession.IsBlocked || video.IsBlocked)
+                    return Content(AccountInSession.IsBlocked
+                        ? "You are blocked. You can not edit your video."
+                        : "This video is blocked. You can not edit it.");
+            }
 
             return View(video);
         }
@@ -121,6 +147,18 @@ namespace Vidhalla.Controllers
             var videoToUpdate = UnitOfWork.Videos.Get(video.Id);
             if (videoToUpdate == null)
                 return HttpNotFound();
+
+
+            if (!AccountInSession.IsAdmin())
+            {
+                if (!AccountInSession.Is(videoToUpdate.Uploader))
+                    return Content("Why would you even think you can edit someone else's video ?");
+                if (AccountInSession.IsBlocked || videoToUpdate.IsBlocked)
+                    if (AccountInSession.IsBlocked || video.IsBlocked)
+                        return Content(AccountInSession.IsBlocked
+                            ? "You are blocked. You can not edit your video."
+                            : "This video is blocked. You can not edit it.");
+            }
 
             string[] valuesToUpdate =
             {
@@ -147,7 +185,7 @@ namespace Vidhalla.Controllers
         [HttpPost]
         [AllowRoles(ADMIN, REGULAR_USER)]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id = 0)
         {
             if (id <= 0)
                 return HttpBadRequest();
@@ -166,5 +204,6 @@ namespace Vidhalla.Controllers
 
             return RedirectToAction("Index");
         }
+
     }
 }
