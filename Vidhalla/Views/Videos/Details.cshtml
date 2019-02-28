@@ -49,8 +49,16 @@
         <span id="dtUploadedSpan">&nbsp; published on @Model.DateUploaded.Date.ToShortDateString()</span>
         <p id="descriptionParagraph" style="margin-top: 0.8em;">@Model.Description</p>
         <div id="ratingDiv" style="margin-top: 1.5em;">
-            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md" data-type="like">Like</button>&nbsp;
+            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md" data-type="like">
+                <i class="glyphicon glyphicon-thumbs-up"></i>
+                Like
+            </button>
             <span id="likesSpan">LAJKOVI</span>
+            &nbsp;
+            <button id="dislikeVideoBtn" type="button" class="btn btn-default btn-md" data-type="dislike">
+                <i class="glyphicon glyphicon-thumbs-down"></i>
+                Dislike
+            </button>
             <span id="dislikesSpan">DISLAJKOVI</span>
         </div>
 
@@ -67,68 +75,72 @@
 </main>
 
 <hr>
+@if (!Model.IsCommentingAllowed)
+{
+    <p style="margin-bottom: 1.75em;"><i>Commenting is not allowed for this video.</i></p>
+}
+else
+{
 
-<section id="commentsSection">
-    <div class="form-group">
-        <br>
-        <textarea id="myCommentInput" class="form-control" rows="5" style="width: 65%;" placeholder="Write your own comment"></textarea>
-        <button id="postCommentBtn" type="button" class="btn btn-primary" style="margin-top: 0.5em;">
-            <span class="glyphicon glyphicon-comment"></span> Comment
-        </button>
-    </div>
-    <hr>
-
-    <div class="form-group" style="width: 12.5%">
-        <select id="sortSelect" class="form-control">
-            s
-            <option value="rating-desc">Rating, DESC</option>
-            <option value="rating-asc">Rating, ASC</option>
-            <option value="datePosted-asc">Oldest First</option>
-            <option value="datePosted-desc">Newest First</option>
-        </select>
-    </div>
-
-    <ul id="commentsList" style="width: 65%;">
-
-        @foreach (var c in Model.Comments)
-        {
-            var commenter = c.Commenter;
-            <li>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = commenter.ProfilePicture}) class="smallThumbnail">
-                        @Html.ActionLink(commenter.Username, "Details", "Accounts", new { username = commenter.Username }, null)
-                        <span> posted on @c.DatePosted.Date.ToShortDateString()</span>
-                        <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-index="INDEX" data-commentid=@c.Id><span class="glyphicon glyphicon-trash"></span></button>
-                    </div>
-
-                    <div class="panel-body">
-                        @c.Content
-                        <br>
-                        <hr>
-                    </div>
-
-                </div>
-            </li>
-        }
-        <!-- Dalje dinamicki generisem komentare koji se ticu ovog videa -->
-        <!-- Komentari ce biti oblika
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <img id="commentatorThumbnail" class="img-circle" src="Defaultni thumbnail"> koja ce biti 35px * 35px
-                <a href="user.html?usernameKorisnika">Ime Korisnika</a>
-            </div>
-            <div class="panel-body">
-                <button id="likeCommentBtn" type="button" class="btn btn-default btn-sm" value="like">
-                    <span class="glyphicon glyphicon-thumbs-up">Like</span>
-                </button>
-            </div>
+    <section id="commentsSection">
+        <div class="form-group">
+            <br>
+            <textarea id="myCommentInput" class="form-control" rows="5" style="width: 65%;" placeholder="Write your own comment"></textarea>
+            <button id="postCommentBtn" type="button" class="btn btn-primary" data-action="@nextAction" style="margin-top: 0.5em;">
+                <span class="glyphicon glyphicon-comment"></span> Comment
+            </button>
         </div>
-        -->
+        <hr>
 
-    </ul>
-</section>
 
+        <div class="form-group" style="width: 12.5%">
+            <select id="sortOrderSelect" class="form-control">
+                <option value="datePosted-asc">Oldest First</option>
+                <option value="datePosted-desc">Newest First</option>
+            </select>
+        </div>
+
+        <ul id="commentsList" style="width: 65%;">
+
+            @foreach (var c in Model.Comments)
+            {
+                var commenter = c.Commenter;
+                <li>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = commenter.ProfilePicture}) class="smallThumbnail">
+                            @Html.ActionLink(commenter.Username, "Details", "Accounts", new { username = commenter.Username }, null)
+                            <span> posted on @c.DatePosted.Date.ToShortDateString()</span>
+                            <button type="button" class="btn btn-danger btn-sm deleteCommentBtn" data-action="@nextAction" data-commentid=@c.Id><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+
+                        <div class="panel-body">
+                            @c.Content
+                            <br>
+                            <hr>
+                        </div>
+
+                    </div>
+                </li>
+            }
+            <!-- Dalje dinamicki generisem komentare koji se ticu ovog videa -->
+            <!-- Komentari ce biti oblika
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img id="commentatorThumbnail" class="img-circle" src="Defaultni thumbnail"> koja ce biti 35px * 35px
+                    <a href="user.html?usernameKorisnika">Ime Korisnika</a>
+                </div>
+                <div class="panel-body">
+                    <button id="likeCommentBtn" type="button" class="btn btn-default btn-sm" value="like">
+                        <span class="glyphicon glyphicon-thumbs-up">Like</span>
+                    </button>
+                </div>
+            </div>
+            -->
+
+        </ul>
+    </section>
+}
 @section scripts
 {
     <script type="text/javascript" src=@Url.Content("~/Scripts/mSnackbar.min.js")></script>

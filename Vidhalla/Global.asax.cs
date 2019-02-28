@@ -16,6 +16,7 @@ namespace Vidhalla
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

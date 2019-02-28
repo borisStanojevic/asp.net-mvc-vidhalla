@@ -35,7 +35,7 @@ namespace Vidhalla.Persistence
 
         public IEnumerable<Video> GetAllByTitle(SortingDirection sortingDirection)
         {
-            if (SortingDirection.DESC.Equals(sortingDirection))
+            if (SortingDirection.DESC == sortingDirection)
                 return DbContext.Set<Video>().Include(v => v.Uploader)
                                              .OrderByDescending(v => v.Title)
                                              .ToList();
@@ -47,7 +47,7 @@ namespace Vidhalla.Persistence
 
         public IEnumerable<Video> GetAllByUploader(SortingDirection sortingDirection)
         {
-            if (SortingDirection.DESC.Equals(sortingDirection))
+            if (SortingDirection.DESC == sortingDirection)
                 return DbContext.Set<Video>().Include(v => v.Uploader)
                                              .OrderByDescending(v => v.Uploader.Username)
                                              .ToList();
@@ -59,7 +59,7 @@ namespace Vidhalla.Persistence
 
         public IEnumerable<Video> GetAllByDateUploaded(SortingDirection sortingDirection)
         {
-            if (SortingDirection.DESC.Equals(sortingDirection))
+            if (SortingDirection.DESC == sortingDirection)
                 return DbContext.Set<Video>().Include(v => v.Uploader)
                                              .OrderByDescending(v => v.DateUploaded)
                                              .ToList();
@@ -78,6 +78,7 @@ namespace Vidhalla.Persistence
                                          .Include(v => v.Comments.Select(c => c.Commenter))
                                          .SingleOrDefault();
         }
+
 
         public override Video Get(int id)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using Vidhalla.Core.Domain;
 using Vidhalla.Core.Repositories;
@@ -19,13 +20,26 @@ namespace Vidhalla.Persistence
             get { return GenericContext as VidhallaDbContext; }
         }
 
-        public void Add(string content, int videoId, int commenterId)
+        public IEnumerable<Comment> GetAllByDatePosted(Expression<Func<Comment, bool>> predicate, SortingDirection sortingDirection)
         {
-            const string query = "INSERT INTO Comments(Content, DatePosted, IsDeleted, Video_Id, Commenter_Id) "
-                               + "VALUES({0}, {1}, {2}, {3}, {4})";
+            if (SortingDirection.DESC == sortingDirection)
+                return DbContext.Set<Comment>().Include(c => c.Commenter)
+                                               .Where(predicate)
+                                               .OrderByDescending(c => c.DatePosted)
+                                               .ToList();
 
-            DbContext.Set<Comment>().SqlQuery(query, content.Length, false, DateTime.Now, videoId, commenterId);
+            return DbContext.Set<Comment>().Include(c => c.Commenter)
+                                           .Where(predicate)
+                                           .OrderBy(c => c.DatePosted)
+                                           .ToList();
         }
 
+        public override Comment Get(int id)
+        {
+            return DbContext.Set<Comment>().Where(c => c.Id == id)
+                                           .Include(c => c.Commenter)
+                                           .SingleOrDefault();
+        }
     }
+
 }

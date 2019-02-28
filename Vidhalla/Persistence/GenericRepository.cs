@@ -29,7 +29,7 @@ namespace Vidhalla.Persistence
             return GenericContext.Set<T>().ToList();
         }
 
-        public T Get(Expression<Func<T, bool>> predicate)
+        public virtual T Get(Expression<Func<T, bool>> predicate)
         {
             return GenericContext.Set<T>().SingleOrDefault(predicate);
         }

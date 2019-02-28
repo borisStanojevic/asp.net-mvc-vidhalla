@@ -164,10 +164,10 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
+    <Compile Include="Controllers\VideoVotesController.cs" />
     <Compile Include="Core\Domain\Account.cs" />
     <Compile Include="Core\Domain\AccountSessionModel.cs" />
     <Compile Include="Core\Domain\Comment.cs" />
-    <Compile Include="Core\Domain\CommentJsonModel.cs" />
     <Compile Include="Core\Domain\Enums.cs" />
     <Compile Include="Core\Domain\Video.cs" />
     <Compile Include="Core\Domain\VideoVote.cs" />
@@ -223,6 +223,7 @@
     <Compile Include="ViewModels\Accounts\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Accounts\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Accounts\UploadPictureViewModel.cs" />
+    <Compile Include="ViewModels\Comments\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Videos\IndexViewModel.cs" />
     <Compile Include="ViewModels\Accounts\LoginViewModel.cs" />
   </ItemGroup>

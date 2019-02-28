@@ -10,9 +10,6 @@ namespace Vidhalla.Core.Repositories
 {
     public interface IVideoRepository : IGenericRepository<Video>
     {
-        //GetTopFiveVideos
-        //GetVideoWithComments
-        //GetVideoWithRatingt
 
         IEnumerable<Video> GetAllByViews(SortingDirection sortingDirection);
         IEnumerable<Video> GetAllByTitle(SortingDirection sortingDirection);
