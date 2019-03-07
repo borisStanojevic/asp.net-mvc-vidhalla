@@ -90,7 +90,7 @@ namespace Vidhalla.Controllers
             return RedirectToAction("Index", "Videos");
         }
 
-        [Route("accounts/details/{username:regex(^\\w{6,31}$)}")]
+        [Route("/accounts/details/{username:regex(^\\w{6,31}$)}")]
         public ActionResult Details(string username)
         {
 

@@ -137,6 +137,43 @@
 
                 });
         });
+
+    $("#likeVideoBtn").click(function (e) {
+        e.preventDefault();
+
+        $.ajax("/video-votes/create",
+            {
+                type: "POST",
+                dataType: "json",
+                data: { videoId: videoId, type: "LIKE" },
+
+                success: function (data) {
+
+                },
+                error: function () {
+                    snackbar("Error liking video");
+                }
+            });
+    });
+
+    $("#dislikeVideoBtn").click(function (e) {
+        e.preventDefault();
+
+        $.ajax("/video-votes/create",
+            {
+                type: "POST",
+                dataType: "json",
+                data: { videoId: videoId, type: "DISLIKE" },
+
+                success: function (data) {
+
+                },
+                error: function () {
+                    snackbar("Error liking video");
+                }
+            });
+    });
+
 });
 
 function createCommentListItem(comment) {

@@ -11,6 +11,7 @@ using static Vidhalla.Core.Domain.Vote;
 
 namespace Vidhalla.Controllers
 {
+    [Route("/video-votes")]
     public class VideoVotesController : MyController
     {
 
@@ -20,6 +21,7 @@ namespace Vidhalla.Controllers
         {
             var videoVote = UnitOfWork.VideoVotes.Get(vv => (vv.Video_Id == videoId && vv.Owner_Id == AccountInSession.Id));
             //Ako ne uspije vratit vote znaci da se prvi put lajkuje ili dislajkuje pa napravi i dodaj
+            //var actionTaken = null;
             if (videoVote == null)
             {
                 videoVote = new VideoVote

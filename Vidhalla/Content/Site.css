@@ -22,8 +22,19 @@
 .input-validation-error {
     border: 1.5px solid red;
 }
+
 ul {
     list-style: none;
+}
+
+.highlitedLike {
+    background-color: lightgray;
+    border: 1.5px solid gray;
+}
+
+.highlitedDislike {
+    background-color: lightgray;
+    border: 1.5px solid gray;
 }
 
 .jumbotron {

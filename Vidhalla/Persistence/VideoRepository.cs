@@ -74,7 +74,7 @@ namespace Vidhalla.Persistence
         {
             return DbContext.Set<Video>().Where(v => v.Id == id)
                                          .Include(v => v.Uploader)
-                                         .Include(v => v.Votes)
+                                         .Include(v => v.Votes.Select(vv => vv.Owner))
                                          .Include(v => v.Comments.Select(c => c.Commenter))
                                          .SingleOrDefault();
         }

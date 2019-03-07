@@ -1,4 +1,5 @@
-﻿@using Vidhalla.Extensions
+﻿@using Vidhalla.Core.Domain
+@using Vidhalla.Extensions
 @model Vidhalla.Core.Domain.Video
 
 @{
@@ -14,6 +15,28 @@
     else
     {
         nextAction = "Login";
+    }
+    var highlitedLike = "";
+    var highlitedDislike = "";
+    if (accountInSession != null)
+    {
+        foreach (var vv in Model.Votes)
+        {
+            if (accountInSession.Is(vv.Owner))
+            {
+                if (vv.Type == Vote.LIKE)
+                {
+                    highlitedLike = "LIKE";
+                    highlitedDislike = null;
+                }
+                else
+                {
+                    highlitedDislike = "DISLIKE";
+                    highlitedLike = null;
+                }
+                break;
+            }
+        }
     }
 }
 
@@ -49,13 +72,13 @@
         <span id="dtUploadedSpan">&nbsp; published on @Model.DateUploaded.Date.ToShortDateString()</span>
         <p id="descriptionParagraph" style="margin-top: 0.8em;">@Model.Description</p>
         <div id="ratingDiv" style="margin-top: 1.5em;">
-            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md" data-type="like">
+            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md @highlitedLike" data-type="like">
                 <i class="glyphicon glyphicon-thumbs-up"></i>
                 Like
             </button>
             <span id="likesSpan">LAJKOVI</span>
             &nbsp;
-            <button id="dislikeVideoBtn" type="button" class="btn btn-default btn-md" data-type="dislike">
+            <button id="dislikeVideoBtn" type="button" class="btn btn-default btn-md @highlitedDislike" data-type="dislike">
                 <i class="glyphicon glyphicon-thumbs-down"></i>
                 Dislike
             </button>
@@ -123,23 +146,9 @@ else
                     </div>
                 </li>
             }
-            <!-- Dalje dinamicki generisem komentare koji se ticu ovog videa -->
-            <!-- Komentari ce biti oblika
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <img id="commentatorThumbnail" class="img-circle" src="Defaultni thumbnail"> koja ce biti 35px * 35px
-                    <a href="user.html?usernameKorisnika">Ime Korisnika</a>
-                </div>
-                <div class="panel-body">
-                    <button id="likeCommentBtn" type="button" class="btn btn-default btn-sm" value="like">
-                        <span class="glyphicon glyphicon-thumbs-up">Like</span>
-                    </button>
-                </div>
-            </div>
-            -->
-
         </ul>
     </section>
+
 }
 @section scripts
 {
