@@ -42,6 +42,8 @@ namespace Vidhalla.Controllers
             {
                 Username = viewModel.Username,
                 Password = viewModel.Password,
+                FirstName = viewModel.FirstName,
+                LastName = viewModel.LastName,
                 Role = REGULAR_USER
             };
             UnitOfWork.Accounts.Add(account);
@@ -90,7 +92,7 @@ namespace Vidhalla.Controllers
             return RedirectToAction("Index", "Videos");
         }
 
-        [Route("/accounts/details/{username:regex(^\\w{6,31}$)}")]
+        [Route("accounts/details/{username:regex(^\\w{6,31}$)}")]
         public ActionResult Details(string username)
         {
 
@@ -189,6 +191,8 @@ namespace Vidhalla.Controllers
             var account = UnitOfWork.Accounts.Get(accountId);
             if (account == null)
                 return HttpNotFound();
+            if (!AccountInSession.IsAdmin() && !AccountInSession.Is(account))
+                return Content("Why would you even think you can upload image for someone else ?");
 
             try
             {
@@ -237,11 +241,11 @@ namespace Vidhalla.Controllers
                 return HttpNotFound();
 
             if (AccountInSession.Is(beingSubscribedTo))
-                return Content("You can not subscribe to yourself.");
+                return Json(new {errorMessage = "You can not subscribe to yourself."});
             if (!AccountInSession.IsAdmin() && beingSubscribedTo.IsBlocked)
-                return Content("You can not subscribe to this user. He is blocked.");
+                return Json(new {errorMessage = "You can not subscribe to this user. He is blocked."});
             if (!AccountInSession.IsAdmin() && AccountInSession.IsBlocked)
-                return Content("You are blocked. You can not subscribe to anyone.");
+                return Json(new {errorMessage = "You are blocked. You can not subscribe to anyone."});
 
 
             var isAlreadySubscribed = beingSubscribedTo.Subscribers.Any(s => AccountInSession.Is(s));

@@ -11,10 +11,10 @@ namespace Vidhalla.Core.Repositories
     public interface IVideoRepository : IGenericRepository<Video>
     {
 
-        IEnumerable<Video> GetAllByViews(SortingDirection sortingDirection);
-        IEnumerable<Video> GetAllByTitle(SortingDirection sortingDirection);
-        IEnumerable<Video> GetAllByUploader(SortingDirection sortingDirection);
-        IEnumerable<Video> GetAllByDateUploaded(SortingDirection sortingDirection);
+        IEnumerable<Video> GetAllByViews(SortingDirection sortingDirection, string searchString);
+        IEnumerable<Video> GetAllByTitle(SortingDirection sortingDirection, string searchString);
+        IEnumerable<Video> GetAllByUploader(SortingDirection sortingDirection, string searchString);
+        IEnumerable<Video> GetAllByDateUploaded(SortingDirection sortingDirection, string searchString);
         Video GetIncludeRelated(int id);
 
     }

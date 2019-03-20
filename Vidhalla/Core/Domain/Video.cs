@@ -11,6 +11,8 @@ namespace Vidhalla.Core.Domain
 
         public int Id { get; set; }
 
+        [Required]
+        [Url]
         public string Url { get; set; }
 
         [Required]

@@ -1,17 +1,13 @@
 ﻿$(document).ready(e => {
 
     var videoId = window.location.href.substr(window.location.href.lastIndexOf("/") + 1).trim();
-
+    var VOTE_STATUS = Object.freeze({ NONE: "NONE", LIKED: "LIKED", DISLIKED: "DISLIKED" });
     var snackbar = function (msg) {
         $.mSnackbar(msg);
         setTimeout(function () { $.mSnackbar().close(); }, 2700);
     }
 
     $("button").on("mousedown", e => e.preventDefault());
-
-    $("#likeVideoBtn").on("click", () => {
-        snackbar("You liked this video");
-    });
 
 
     $("#subscribeBtn").click(function (e) {
@@ -28,6 +24,10 @@
                 data: { "id": account },
 
                 success: function (data) {
+                    if (data.errorMessage) {
+                        alert(data.errorMessage);
+                        return;
+                    };
                     var nextAction = new String(data.nextAction);
                     $this.text(nextAction);
                     $this.attr("data-action", nextAction);
@@ -62,6 +62,7 @@
         $.ajax("/comments/create",
             {
                 type: "POST",
+                dataType: "json",
                 data: { content: content, videoId: videoId },
 
                 success: function (data) {
@@ -74,7 +75,7 @@
                     $("#commentsList").prepend($commentLi);
                 },
                 error: function (error) {
-                    alert(error);
+                    window.location.href = "/accounts/login";
                 }
             });
     });
@@ -140,36 +141,85 @@
 
     $("#likeVideoBtn").click(function (e) {
         e.preventDefault();
+        var thisBtn = (this);
 
-        $.ajax("/video-votes/create",
+        $.ajax("/videovotes/create",
             {
                 type: "POST",
                 dataType: "json",
                 data: { videoId: videoId, type: "LIKE" },
 
                 success: function (data) {
+                    if (data.errorMessage) {
+                        alert(data.errorMessage);
+                        return;
+                    };
+                    var currentVoteStatus = $("#currentVoteStatus");
+                    var likesSpan = $("#likesSpan");
+                    var likesCount = parseInt(likesSpan.text());
 
+                    if (currentVoteStatus.text() === VOTE_STATUS.NONE) {
+                        likesSpan.text(++likesCount);
+                        currentVoteStatus.text(VOTE_STATUS.LIKED);
+                        snackbar("Added to liked videos");
+                    }
+                    else if (currentVoteStatus.text() === VOTE_STATUS.LIKED) {
+                        likesSpan.text(--likesCount);
+                        currentVoteStatus.text(VOTE_STATUS.NONE);
+                    }
+                    else if (currentVoteStatus.text() === VOTE_STATUS.DISLIKED) {
+                        var dislikesCount = parseInt($("#dislikesSpan").text());
+                        $("#dislikesSpan").text(--dislikesCount);
+                        likesSpan.text(++likesCount);
+                        currentVoteStatus.text(VOTE_STATUS.LIKED);
+                        snackbar("Added to liked videos");
+                    }
                 },
                 error: function () {
-                    snackbar("Error liking video");
+                    window.location.href = "/accounts/login";
                 }
             });
     });
 
     $("#dislikeVideoBtn").click(function (e) {
         e.preventDefault();
+        var thisBtn = $(this);
 
-        $.ajax("/video-votes/create",
+        $.ajax("/videovotes/create",
             {
                 type: "POST",
                 dataType: "json",
                 data: { videoId: videoId, type: "DISLIKE" },
 
                 success: function (data) {
+                    if (data.errorMessage) {
+                        alert(data.errorMessage);
+                        return;
+                    };
+                    var currentVoteStatus = $("#currentVoteStatus");
+                    var dislikesSpan = $("#dislikesSpan");
+                    var dislikesCount = parseInt(dislikesSpan.text());
+
+                    if (currentVoteStatus.text() === VOTE_STATUS.NONE) {
+                        dislikesSpan.text(++dislikesCount);
+                        currentVoteStatus.text(VOTE_STATUS.DISLIKED);
+                        snackbar("You dislike this video");
+                    }
+                    else if (currentVoteStatus.text() === VOTE_STATUS.DISLIKED) {
+                        dislikesSpan.text(--dislikesCount);
+                        currentVoteStatus.text(VOTE_STATUS.NONE);
+                    }
+                    else if (currentVoteStatus.text() === VOTE_STATUS.LIKED) {
+                        var likesCount = parseInt($("#likesSpan").text());
+                        $("#likesSpan").text(--likesCount);
+                        dislikesSpan.text(++dislikesCount);
+                        currentVoteStatus.text(VOTE_STATUS.DISLIKED);
+                        snackbar("You dislike this video");
+                    }
 
                 },
                 error: function () {
-                    snackbar("Error liking video");
+                    window.location.href = "/accounts/login";
                 }
             });
     });

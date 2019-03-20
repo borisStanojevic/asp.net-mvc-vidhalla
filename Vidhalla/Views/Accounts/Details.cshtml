@@ -1,4 +1,5 @@
-﻿@using Vidhalla.Extensions
+﻿@using Vidhalla.Core.Domain
+@using Vidhalla.Extensions
 @model Vidhalla.ViewModels.Accounts.DetailsViewModel
 
 @{
@@ -21,60 +22,15 @@
 
 }
 
-<div class="modal fade" id="uploadVideoDialog" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Upload</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <input name="name" type="text" class="form-control" placeholder="Video Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="url" type="url" class="form-control" placeholder="Url" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="description" type="text" class="form-control" placeholder="Description">
-                    </div>
-                    <div class="form-group">
-                        <select id="visibilitySelect">
-                            <option value="PUBLIC"> Public</option>
-                            <option value="UNLISTED"> Unlisted</option>
-                            <option value="PRIVATE"> Private</option>
-                        </select>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input name="commentsAllowed" type="checkbox" value="">Allow Comments
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input name="ratingVisible" type="checkbox" value="">Rating Visible
-                        </label>
-                    </div>
-                    <label class="errorMsgLabel"></label>
-                    <button id="uploadVideoBtn" class="btn btn-primary btn-block">
-                        <span class="glyphicon glyphicon-upload"></span> Upload
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div style="margin-top: 7em;" class="container">
 
     <main>
-        <img alt="Profile picture" src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = account.ProfilePicture}) class="bigThumbnail">
+        <img alt="Profile picture" src=@Url.Action("LoadProfilePicture", "Accounts", new { profilePicture = account.ProfilePicture }) class="bigThumbnail">
         <h1 id="username"> @account.Username <br /> <text>@account.Subscribers.Count subscribers</text> </h1>
 
         @* Ako neulogovan korisnik posmatra ne daj
-        Ako je ulogovani korisnik vlasnik naloga koji se posmatra a nije admin onda vidi da li je blokiran ako jeste ne daj
-         Ako ulogovani korisnik nije vlasnik i nije admin ne daj
+            Ako je ulogovani korisnik vlasnik naloga koji se posmatra a nije admin onda vidi da li je blokiran ako jeste ne daj
+             Ako ulogovani korisnik nije vlasnik i nije admin ne daj
         *@
 
         @if (accountInSession != null && (accountInSession.IsAdmin() || (accountInSession.Is(account) && !account.IsBlocked)))
@@ -94,18 +50,8 @@
             @Html.ActionLink("Edit", "Edit", "Accounts", new { id = account.Id }, new { @class = "btn btn-info", role = "button" })
 
         }
-        @if (accountInSession != null && accountInSession.IsAdmin())
-        {
-            using (Html.BeginForm("Delete", "Accounts", FormMethod.Post))
-            {
-                @Html.HiddenFor(m => m.Account.Id)
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span> Delete
-                </button>
-            }
-        }
-        <p id="channelInfo"> @account.ChannelDescription </p>
+
+        <p id="channelInfo" style="margin-top: 1.5em;"> @account.ChannelDescription </p>
 
     </main>
 
@@ -114,37 +60,55 @@
 </div>
 
 <div class="container" style="display:block;content:'';clear:both">
-    <section style="width : 40%;float: left">
-        <button id="showUploadVideoBtn" type="button" class="btn btn-success btn-md">
-            <span class="glyphicon glyphicon-upload"></span> Upload
-        </button>
+    <section style="width: 40%; float: left">
+        @if (accountInSession != null && (accountInSession.IsAdmin() || (accountInSession.Is(account) && !account.IsBlocked)))
+        {
+            @Html.ActionLink("Upload", "Upload", "Videos", null, new { @class = "btn btn-primary", role = "button" })
+            <br>
+        }
 
-        <br>
         <h3>Uploaded Videos</h3>
-        <select style="width: 10em" id="sortUploadedSelect" class="form-control">
-            <option value="dtUploadedDesc"> Newest First</option>
-            <option value="dtUploadedAsc"> Oldest First</option>
-            <option value="viewsAsc"> Views, Asc</option>
-            <option value="viewsDesc"> Views, Desc</option>
-        </select>
-        <br>
-        <ul id="uploadedVideosList">
-            <!--Ovdje kacim dinamicki kreirane <li> videa koje je korisnik cija se stranica posmatra, uploadovao  -->
-            @foreach (var video in account.UploadedVideos)
-            {
-                <li>
-                    <div>
-                        <iframe src=@video.Url></iframe>
-                        <button type="button" class="btn btn-danger deleteVideoBtn" data-id=@video.Id>
-                            <span class="glyphicon glyphicon-trash"></span> Delete
-                        </button>
-                        <h4> @Html.ActionLink(video.Title, "Details", "Videos", new { id = video.Id }, new { }) </h4>
-                        <span> @video.ViewsCount views</span>
-                        <span style="display:block">Published on @video.DateUploaded.ToShortDateString() </span>
-                    </div>
-                </li>
-            }
 
+        <ul id="uploadedVideosList">
+            @if (account.UploadedVideos.Count == 0)
+            {
+                <li>No uploaded videos yet.</li>
+            }
+            else
+            {
+                foreach (var video in account.UploadedVideos)
+                {
+                    if (accountInSession == null || (accountInSession.IsRegularUser() && !accountInSession.Is(video.Uploader)))
+                    {
+                        if (video.Visibility == Visibility.PUBLIC)
+                        {
+                            <li>
+                                <div>
+                                    <iframe src=@video.Url></iframe>
+                                    <h4> @Html.ActionLink(video.Title, "Details", "Videos", new { id = video.Id }, new { }) </h4>
+                                    <span> @video.ViewsCount views</span>
+                                    <span style="display: block">Published on @video.DateUploaded.ToShortDateString() </span>
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        if (accountInSession.IsAdmin() || accountInSession.Is(video.Uploader))
+                        {
+                            <li>
+                                <div>
+                                    <iframe src=@video.Url></iframe>
+                                    <h4> @Html.ActionLink(video.Title, "Details", "Videos", new { id = video.Id }, new { }) </h4>
+                                    <span> @video.ViewsCount views</span>
+                                    <span style="display: block">Published on @video.DateUploaded.ToShortDateString() </span>
+                                </div>
+                            </li>
+                        }
+                    }
+
+                }
+            }
         </ul>
     </section>
     <aside style="margin-top: 2.4em;width : 20%; float: right;">
@@ -152,18 +116,25 @@
         <br>
         <ul id="subscribedsList">
 
-            <!-- Ovdje kacim dinamicki kreirane <li> korisnika koje korisnik cija se stranica posmatra, prati -->
-            @foreach (var subscribed in subscribeds)
+            @if (!subscribeds.Any())
             {
-                <li>
-                    <a href=@Url.Action("Details", "Accounts", new {username = subscribed.Username})> <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = subscribed.ProfilePicture}) class="smallThumbnail"> @subscribed.Username </a>
-                    &nbsp;
-                    <span style="float: right; padding-top: 0.46em;">@subscribed.Subscribers.Count</span>
-                    <hr />
-                </li>
-
+                <li><i>Not following anyone yet.</i></li>
             }
+            else
+            {
+                <!-- Ovdje kacim dinamicki kreirane <li> korisnika koje korisnik cija se stranica posmatra, prati -->
+                foreach (var subscribed in subscribeds)
+                {
 
+                    <li>
+                        <a href=@Url.Action("Details", "Accounts", new {username = subscribed.Username})> <img src=@Url.Action("LoadProfilePicture", "Accounts", new {profilePicture = subscribed.ProfilePicture}) class="smallThumbnail"> @subscribed.Username </a>
+                        &nbsp;
+                        <span style="float: right; padding-top: 0.46em;">@subscribed.Subscribers.Count</span>
+                        <hr />
+                    </li>
+
+                }
+            }
         </ul>
     </aside>
 </div>

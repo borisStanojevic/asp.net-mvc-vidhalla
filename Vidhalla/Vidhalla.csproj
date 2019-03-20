@@ -171,7 +171,6 @@
     <Compile Include="Core\Domain\Enums.cs" />
     <Compile Include="Core\Domain\Video.cs" />
     <Compile Include="Core\Domain\VideoVote.cs" />
-    <Compile Include="Core\Domain\VideoVoteJsonModel.cs" />
     <Compile Include="Core\Domain\VidhallaDbContext.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IAccountRepository.cs" />
@@ -179,10 +178,10 @@
     <Compile Include="Core\Repositories\IGenericRepository.cs" />
     <Compile Include="Core\Repositories\IVideoRepository.cs" />
     <Compile Include="Core\Repositories\IVideoVoteRepository.cs" />
-    <Compile Include="EntitiesConfiguration\AccountConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CommentConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\VideoConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\VideoVoteConfiguration.cs" />
+    <Compile Include="Persistence\EntitiesConfiguration\AccountConfiguration.cs" />
+    <Compile Include="Persistence\EntitiesConfiguration\CommentConfiguration.cs" />
+    <Compile Include="Persistence\EntitiesConfiguration\VideoConfiguration.cs" />
+    <Compile Include="Persistence\EntitiesConfiguration\VideoVoteConfiguration.cs" />
     <Compile Include="Filters\AllowRoles.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -222,7 +221,6 @@
     <Compile Include="Extensions\SessionExtension.cs" />
     <Compile Include="ViewModels\Accounts\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Accounts\SignUpViewModel.cs" />
-    <Compile Include="ViewModels\Accounts\UploadPictureViewModel.cs" />
     <Compile Include="ViewModels\Comments\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Videos\IndexViewModel.cs" />
     <Compile Include="ViewModels\Accounts\LoginViewModel.cs" />
@@ -275,6 +273,7 @@
     <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Accounts\SignUp.cshtml" />
+    <Content Include="Views\Videos\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

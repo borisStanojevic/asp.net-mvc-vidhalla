@@ -22,7 +22,7 @@ namespace Vidhalla.Controllers
     {
 
         // GET: Videos?sortOrder='key-direction'
-        public ActionResult Index(string sortOrder = "dateUploaded-desc")
+        public ActionResult Index(string sortOrder = "dateUploaded-desc", string searchString = "")
         {
             string sortingKey;
             SortingDirection sortingDirection;
@@ -42,16 +42,16 @@ namespace Vidhalla.Controllers
             switch (sortingKey)
             {
                 case "views":
-                    videos = UnitOfWork.Videos.GetAllByViews(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByViews(sortingDirection, searchString);
                     break;
                 case "title":
-                    videos = UnitOfWork.Videos.GetAllByTitle(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByTitle(sortingDirection, searchString);
                     break;
                 case "uploader":
-                    videos = UnitOfWork.Videos.GetAllByUploader(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByUploader(sortingDirection, searchString);
                     break;
                 default:
-                    videos = UnitOfWork.Videos.GetAllByDateUploaded(sortingDirection);
+                    videos = UnitOfWork.Videos.GetAllByDateUploaded(sortingDirection, searchString);
                     break;
 
             }
@@ -89,29 +89,35 @@ namespace Vidhalla.Controllers
             return View(video);
         }
 
-        //// GET: Videos/Create
-        //[AllowRoles(ADMIN, REGULAR_USER)]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        [AllowRoles(ADMIN, REGULAR_USER)]
+        public ActionResult Upload()
+        {
+            return View(new Video());
+        }
 
-        //// POST: Videos/Create
-        //[HttpPost]
-        //[AllowRoles(ADMIN, REGULAR_USER)]
-        //public ActionResult Create(FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
+        [HttpPost]
+        [AllowRoles(ADMIN, REGULAR_USER)]
+        public ActionResult Upload(Video video)
+        {
+            if (!ModelState.IsValid)
+                return View(video);
+            if (AccountInSession.IsBlocked)
+                return Content("You are blocked. You can not upload videos.");
+            try
+            {
+                var uploader = UnitOfWork.Accounts.Get(AccountInSession.Id);
+                video.Uploader = uploader;
+                UnitOfWork.Videos.Add(video);
+                UnitOfWork.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            return RedirectToAction("Details", "Accounts", new { username = video.Uploader.Username });
+        }
 
         [AllowRoles(ADMIN, REGULAR_USER)]
         public ActionResult Edit(int id = 0)

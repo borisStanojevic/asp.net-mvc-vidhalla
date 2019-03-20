@@ -16,24 +16,15 @@
     {
         nextAction = "Login";
     }
-    var highlitedLike = "";
-    var highlitedDislike = "";
+    var currentVoteStatus = "NONE";
+
     if (accountInSession != null)
     {
         foreach (var vv in Model.Votes)
         {
             if (accountInSession.Is(vv.Owner))
             {
-                if (vv.Type == Vote.LIKE)
-                {
-                    highlitedLike = "LIKE";
-                    highlitedDislike = null;
-                }
-                else
-                {
-                    highlitedDislike = "DISLIKE";
-                    highlitedLike = null;
-                }
+                currentVoteStatus = vv.Type == Vote.LIKE ? "LIKED" : "DISLIKE";
                 break;
             }
         }
@@ -48,21 +39,23 @@
 <main id="main">
     <div style="margin-top: 10em;" id="mainDiv">
         <div class="video embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/58weKJjXWw4">Naziv Videa</iframe>
+            <iframe class="embed-responsive-item" src="@Model.Url">Naziv Videa</iframe>
         </div>
         <br>
-        @Html.ActionLink("Edit", "Edit", "Videos", new { id = Model.Id }, new { @class = "btn btn-info", role = "button" })
-
-        @using (Html.BeginForm("Delete", "Videos"))
+        @if (accountInSession != null && (accountInSession.IsAdmin() || (accountInSession.Is(uploader) && !uploader.IsBlocked)))
         {
-            @Html.HiddenFor(v => v.Id)
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-            </button>
-        }
-        <br>
+            @Html.ActionLink("Edit", "Edit", "Videos", new { id = Model.Id }, new { @class = "btn btn-info", role = "button" })
 
+            using (Html.BeginForm("Delete", "Videos"))
+            {
+                @Html.HiddenFor(v => v.Id)
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> Delete
+                </button>
+            }
+            <br>
+        }
         <h2>@Model.Title</h2>
         <span id="viewsSpan" style="display: block; margin-bottom: 0.8em; margin-top: 1em;">@Model.ViewsCount &nbsp;@(Model.ViewsCount == 1 ? "view" : "views")</span>
         <span id="ownerSpan">
@@ -71,44 +64,53 @@
         </span>
         <span id="dtUploadedSpan">&nbsp; published on @Model.DateUploaded.Date.ToShortDateString()</span>
         <p id="descriptionParagraph" style="margin-top: 0.8em;">@Model.Description</p>
+        
+        
         <div id="ratingDiv" style="margin-top: 1.5em;">
-            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md @highlitedLike" data-type="like">
+            <small id="currentVoteStatus" style="display: none">@currentVoteStatus</small>
+            <button id="likeVideoBtn" type="button" class="btn btn-default btn-md" data-type="like">
                 <i class="glyphicon glyphicon-thumbs-up"></i>
                 Like
             </button>
-            <span id="likesSpan">LAJKOVI</span>
+            <span id="likesSpan">@Model.Votes.Count(vv => vv.Type == Vote.LIKE)</span>
             &nbsp;
-            <button id="dislikeVideoBtn" type="button" class="btn btn-default btn-md @highlitedDislike" data-type="dislike">
+            <button id="dislikeVideoBtn" type="button" class="btn btn-default btn-md" data-type="dislike">
                 <i class="glyphicon glyphicon-thumbs-down"></i>
                 Dislike
             </button>
-            <span id="dislikesSpan">DISLAJKOVI</span>
+            <span id="dislikesSpan">@Model.Votes.Count(vv => vv.Type == Vote.DISLIKE)</span>
         </div>
 
-        <div id="subscriptionDiv">
-            <button id="subscribeBtn" style="margin-top: 0.5em;" type="button" class="btn btn-primary btn-lg"
-                    data-account="@uploader.Id"
-                    data-action="@nextAction">
-                @(nextAction.Equals("Login") ? "Subscribe" : nextAction)
-            </button>
-            <span>@uploader.Subscribers.Count()</span>
-        </div>
+        @if (accountInSession == null || !accountInSession.Is(uploader))
+        {
+            <div id="subscriptionDiv">
+                <button id="subscribeBtn" style="margin-top: 0.5em;" type="button" class="btn btn-primary btn-lg"
+                        data-account="@uploader.Id"
+                        data-action="@nextAction">
+                    @(nextAction.Equals("Login") ? "Subscribe" : nextAction)
+                </button>
+                <span>@uploader.Subscribers.Count()</span>
+            </div>
+        }
 
     </div>
 </main>
 
 <hr>
-@if (!Model.IsCommentingAllowed)
+@if (!Model.IsCommentingAllowed && (accountInSession != null && accountInSession.IsRegularUser()))
 {
     <p style="margin-bottom: 1.75em;"><i>Commenting is not allowed for this video.</i></p>
 }
 else
 {
 
-    <section id="commentsSection">
+    <section id="commentsSection" style="margin-bottom: 3em;">
         <div class="form-group">
             <br>
-            <textarea id="myCommentInput" class="form-control" rows="5" style="width: 65%;" placeholder="Write your own comment"></textarea>
+            <label class="errorMsgLabel">
+                
+            </label>
+            <textarea id="myCommentInput" class="form-control" rows="5" style="width: 65%;" placeholder="Write your own comment" maxlength="1023"></textarea>
             <button id="postCommentBtn" type="button" class="btn btn-primary" data-action="@nextAction" style="margin-top: 0.5em;">
                 <span class="glyphicon glyphicon-comment"></span> Comment
             </button>
@@ -147,6 +149,7 @@ else
                 </li>
             }
         </ul>
+
     </section>
 
 }
